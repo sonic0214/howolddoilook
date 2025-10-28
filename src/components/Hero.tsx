@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { AppState, AnalysisResult } from '../types';
-import ImageUpload from './ImageUpload';
-import AnalysisResultComponent from './AnalysisResult';
+import LoadingSpinner from './LoadingSpinner';
+
+// Lazy load heavy components that are only needed for image analysis
+const ImageUpload = lazy(() => import('./ImageUpload'));
+const AnalysisResultComponent = lazy(() => import('./AnalysisResult'));
 
 export default function Hero() {
   const [appState, setAppState] = useState<AppState>(AppState.IDLE);
@@ -29,12 +32,14 @@ export default function Hero() {
 
       <div id="app-widget" className="mt-12 max-w-xl mx-auto">
         {appState === AppState.IDLE && (
-          <ImageUpload
-            setAppState={setAppState}
-            setResult={setResult}
-            setError={setError}
-            setUploadedImage={setUploadedImage}
-          />
+          <Suspense fallback={<LoadingSpinner message="Preparing upload..." size="medium" />}>
+            <ImageUpload
+              setAppState={setAppState}
+              setResult={setResult}
+              setError={setError}
+              setUploadedImage={setUploadedImage}
+            />
+          </Suspense>
         )}
 
         {appState === AppState.ANALYZING && (
@@ -45,11 +50,13 @@ export default function Hero() {
         )}
 
         {appState === AppState.RESULT && result && (
-          <AnalysisResultComponent
-            result={result}
-            uploadedImage={uploadedImage}
-            onTryAgain={handleReset}
-          />
+          <Suspense fallback={<LoadingSpinner message="Preparing results..." size="medium" />}>
+            <AnalysisResultComponent
+              result={result}
+              uploadedImage={uploadedImage}
+              onTryAgain={handleReset}
+            />
+          </Suspense>
         )}
 
         {appState === AppState.ERROR && (

@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
-import { useEffect } from 'react';
-import Home from './pages/Home';
-import SkincareArticle from './pages/SkincareArticle';
-import NutritionArticle from './pages/NutritionArticle';
-import MindfulnessArticle from './pages/MindfulnessArticle';
+import { useEffect, Suspense, lazy } from 'react';
 import useServiceWorker from './hooks/useServiceWorker';
+import LoadingSpinner from './components/LoadingSpinner';
+
+// Dynamic imports for code splitting
+const Home = lazy(() => import('./pages/Home'));
+const SkincareArticle = lazy(() => import('./pages/SkincareArticle'));
+const NutritionArticle = lazy(() => import('./pages/NutritionArticle'));
+const MindfulnessArticle = lazy(() => import('./pages/MindfulnessArticle'));
 
 function ScrollToTop() {
   const location = useLocation();
@@ -75,10 +78,38 @@ function App() {
     <Router>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/skincare-article" element={<SkincareArticle />} />
-        <Route path="/nutrition-article" element={<NutritionArticle />} />
-        <Route path="/mindfulness-article" element={<MindfulnessArticle />} />
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading homepage..." size="large" />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/skincare-article"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading skincare guide..." />}>
+              <SkincareArticle />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/nutrition-article"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading nutrition guide..." />}>
+              <NutritionArticle />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/mindfulness-article"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
+              <MindfulnessArticle />
+            </Suspense>
+          }
+        />
       </Routes>
     </Router>
   );
