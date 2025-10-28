@@ -19,6 +19,7 @@ export default function ImageUpload({
 }: ImageUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
+  const [statusMessage, setStatusMessage] = useState<string>('');
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -40,11 +41,13 @@ export default function ImageUpload({
   const handleFileSelect = (file: File) => {
     if (!file.type.match(/image\/(jpeg|jpg|png)/)) {
       setError('Please upload a JPG or PNG image');
+      setStatusMessage('Error: Please upload a JPG or PNG image');
       setAppState(AppState.ERROR);
       return;
     }
 
     setSelectedFile(file);
+    setStatusMessage(`Photo "${file.name}" selected and ready for analysis`);
 
     // Create preview
     const reader = new FileReader();
@@ -155,9 +158,27 @@ export default function ImageUpload({
 
   return (
     <div>
+      {/* Screen reader live region for status updates */}
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {statusMessage}
+      </div>
+
       <div
         {...getRootProps()}
-        className={`w-full h-48 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center p-4 cursor-pointer transition-colors ${
+        role="button"
+        tabIndex={0}
+        aria-label="Upload photo for age analysis"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            // Trigger file dialog programmatically if needed
+          }
+        }}
+        className={`w-full h-48 border-2 border-dashed rounded-lg flex flex-col justify-center items-center text-center p-4 cursor-pointer transition-colors focus-visible ${
           isDragActive
             ? 'border-terracotta bg-orange-50'
             : preview
@@ -165,7 +186,11 @@ export default function ImageUpload({
             : 'border-gray-300 hover:border-terracotta'
         }`}
       >
-        <input {...getInputProps()} />
+        <input
+          {...getInputProps()}
+          aria-label="Upload photo for age analysis"
+          title="Upload a photo for AI age analysis"
+        />
         {preview ? (
           <div className="flex flex-col items-center">
             <img
@@ -191,6 +216,7 @@ export default function ImageUpload({
       <button
         onClick={handleAnalyze}
         disabled={!selectedFile}
+        aria-describedby={!selectedFile ? "upload-help" : undefined}
         className={`mt-6 w-full py-4 text-xl font-bold shadow-lg rounded-md transition-colors ${
           selectedFile
             ? 'bg-terracotta text-white hover:bg-amber-700'
@@ -199,6 +225,11 @@ export default function ImageUpload({
       >
         Analyze My Photo
       </button>
+      {!selectedFile && (
+        <p id="upload-help" className="sr-only">
+          Please upload a photo first before enabling the analysis button
+        </p>
+      )}
     </div>
   );
 }
