@@ -1,0 +1,15 @@
+# robots.txt for howolddoilook.art
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin/private paths (if any in future)
+# Disallow: /admin/
+# Disallow: /api/
+
+# Sitemap location
+Sitemap: https://howolddoilook.art/sitemap.xml
+
+# Crawl-delay (optional, helps with server load)
+# Crawl-delay: 1
