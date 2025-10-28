@@ -68,14 +68,128 @@
     <!-- Format Detection -->
     <meta name="format-detection" content="telephone=no">
 
-    <!-- Google Fonts -->
+    <!-- Critical CSS (inlined to prevent render blocking) -->
+    <style>
+      /* Critical above-the-fold styles */
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+        color: #1F2937;
+      }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+      .text-center { text-align: center; }
+      .font-bold { font-weight: 700; }
+      .mb-8 { margin-bottom: 2rem; }
+      .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+      .bg-white { background-color: #ffffff; }
+      .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+      .text-5xl { font-size: 3rem; line-height: 1; }
+      .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+      .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+      .text-gray-600 { color: #4B5563; }
+      .text-terracotta { color: #D97706; }
+      .bg-terracotta { background-color: #D97706; }
+      .text-white { color: #ffffff; }
+      .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .rounded-lg { border-radius: 0.5rem; }
+      .hover\:bg-amber-700:hover { background-color: #B45309; }
+      .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+      .font-serif-display { font-family: 'Playfair Display', serif; }
+
+      /* Hide FOUC (Flash of Unstyled Content) */
+      .no-js { display: none; }
+
+      /* Loading skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+    </style>
+
+    <!-- Optimize font loading with preload and font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/notosans/v35/o-0IIpQlx3QUlC5A4PNb5g.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWMI.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Async font loading with font-display: swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+    <!-- Font Awesome with async loading and font-display optimization -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <!-- Optimize Font Awesome font loading -->
+    <style>
+      /* Override Font Awesome fonts with font-display: swap */
+      @font-face {
+        font-family: 'Font Awesome 6 Free';
+        font-style: normal;
+        font-weight: 900;
+        font-display: swap; /* This is the key optimization */
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Font Awesome 6 Free';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Font Awesome 6 Brands';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2');
+      }
+
+      /* Add font metrics to prevent layout shift */
+      .fa, .fas, .far, .fab, .fal, .fad, .fak, .fass, .fasr, .fasl, .fasss {
+        /* Prevent layout shift during font loading */
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        line-height: 1;
+        width: 1em; /* Ensure consistent width */
+        height: 1em; /* Ensure consistent height */
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      /* Fallback for icons before font loads */
+      .fa::before, .fas::before, .far::before, .fab::before,
+      .fal::before, .fad::before, .fak::before, .fass::before,
+      .fasr::before, .fasl::before, .fasss::before {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      /* Loading state */
+      .fa-loading::before {
+        opacity: 0.3;
+      }
+    </style>
+
+    <!-- Preload critical Font Awesome fonts -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Schema.org Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -219,26 +333,78 @@
     }
     </script>
 
-    <style>
-      html { scroll-behavior: smooth; }
+  
+  
+    <!-- Font Awesome Loading Optimization -->
+    <script>
+      // Font Awesome font loading optimization
+      function optimizeFontLoading() {
+        // Check if Font Awesome fonts are loaded
+        const fontFaces = document.fonts;
 
-      /* Critical CSS for faster perceived loading */
-      .above-the-fold {
-        background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+        // Monitor font loading
+        if ('fonts' in document) {
+          // Solid font (most commonly used)
+          const solidFont = new FontFace('Font Awesome 6 Free',
+            'url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2)',
+            { weight: '900', style: 'normal', display: 'swap' }
+          );
+
+          // Regular font
+          const regularFont = new FontFace('Font Awesome 6 Free',
+            'url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2)',
+            { weight: '400', style: 'normal', display: 'swap' }
+          );
+
+          // Load fonts
+          Promise.all([
+            solidFont.load().then(font => document.fonts.add(font)),
+            regularFont.load().then(font => document.fonts.add(font))
+          ]).then(() => {
+            console.log('Font Awesome fonts loaded with font-display: swap');
+            // Remove loading states if any
+            document.querySelectorAll('.fa-loading').forEach(el => {
+              el.classList.remove('fa-loading');
+            });
+          }).catch(error => {
+            console.warn('Font Awesome font loading failed:', error);
+          });
+        }
       }
 
-      /* Optimize font loading */
-      @font-face {
-        font-family: 'Noto Sans';
-        font-display: swap;
-        src: url('https://fonts.gstatic.com/s/notosans/v35/o-0IIpQlx3QUlC5A4PNb5g.woff2') format('woff2');
+      // Add font loading indicators
+      function addFontLoadingIndicators() {
+        // Add loading state to icons that will be visible immediately
+        const visibleIcons = document.querySelectorAll('.fa, .fas, .far, .fab');
+        visibleIcons.forEach(icon => {
+          if (!icon.classList.contains('fa-loading')) {
+            icon.classList.add('fa-loading');
+          }
+        });
       }
-    </style>
 
-    <!-- Resource Hints for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+      // Initialize font optimization
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          addFontLoadingIndicators();
+          optimizeFontLoading();
+        });
+      } else {
+        addFontLoadingIndicators();
+        optimizeFontLoading();
+      }
+
+      // Font loading timeout fallback
+      setTimeout(() => {
+        const loadingIcons = document.querySelectorAll('.fa-loading');
+        if (loadingIcons.length > 0) {
+          console.warn('Font Awesome loading timeout, removing loading states');
+          loadingIcons.forEach(icon => {
+            icon.classList.remove('fa-loading');
+          });
+        }
+      }, 3000); // 3 second timeout
+    </script>
 
     <!-- Performance Monitoring -->
     <script>
@@ -319,6 +485,53 @@
             throw error;
           });
       };
+    </script>
+    <!-- Async CSS loading for non-critical styles -->
+    <script>
+      // Load full CSS asynchronously after critical CSS is inlined
+      function loadCSS(href) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.onload = function() {
+          console.log('CSS loaded:', href);
+        };
+        link.onerror = function() {
+          console.error('CSS failed to load:', href);
+        };
+        document.head.appendChild(link);
+      }
+
+      // Auto-detect CSS file from link tags or use fallback
+      function getCSSFileName() {
+        // Try to find the CSS file in existing link tags
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        for (let link of links) {
+          if (link.href.includes('/assets/index-') && link.href.includes('.css')) {
+            return link.pathname;
+          }
+        }
+
+        // Fallback: try to fetch the directory and find the CSS file
+        return '/assets/index.css'; // generic fallback
+      }
+
+      // Load the full CSS bundle after initial render
+      window.addEventListener('DOMContentLoaded', function() {
+        // Use requestIdleCallback for better performance
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(function() {
+            const cssFile = getCSSFileName();
+            loadCSS(cssFile);
+          }, { timeout: 2000 });
+        } else {
+          // Fallback for browsers that don't support requestIdleCallback
+          setTimeout(function() {
+            const cssFile = getCSSFileName();
+            loadCSS(cssFile);
+          }, 100);
+        }
+      });
     </script>
   </head>
   <body>
