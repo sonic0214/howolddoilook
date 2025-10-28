@@ -2,8 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- SEO: Title tag optimized with primary keyword first -->
     <title>How Old Do I Look? AI Age Guesser & Vibe Analyzer | Lumin AI</title>
@@ -20,6 +25,10 @@
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://howolddoilook.art/" />
+
+    <!-- Hreflang Tags for International SEO -->
+    <link rel="alternate" hreflang="en" href="https://howolddoilook.art/" />
+    <link rel="alternate" hreflang="x-default" href="https://howolddoilook.art/" />
 
     <!-- Open Graph Meta Tags (Facebook, LinkedIn) -->
     <meta property="og:type" content="website" />
@@ -44,17 +53,273 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+    <!-- DNS Prefetch for Performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <!-- Format Detection -->
+    <meta name="format-detection" content="telephone=no">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <!-- Schema.org Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://howolddoilook.art/#webapp",
+          "name": "How Old Do I Look",
+          "alternateName": "Lumin AI Age Guesser",
+          "url": "https://howolddoilook.art/",
+          "description": "AI-powered age estimation tool that analyzes your photo and provides an age estimate along with a unique Vibe Tag celebrating your energy and personality.",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "Web Browser",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "AI Age Estimation",
+            "Vibe Tag Generation",
+            "Instant Photo Analysis",
+            "Social Media Sharing",
+            "Privacy-Focused (No Image Storage)"
+          ],
+          "screenshot": "https://howolddoilook.art/og-image.jpg",
+          "browserRequirements": "Requires JavaScript. Requires HTML5.",
+          "softwareVersion": "1.0",
+          "author": {
+            "@id": "https://howolddoilook.art/#organization"
+          },
+          "publisher": {
+            "@id": "https://howolddoilook.art/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://howolddoilook.art/#organization",
+          "name": "Lumin AI",
+          "url": "https://howolddoilook.art/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://howolddoilook.art/og-image.jpg",
+            "width": 1200,
+            "height": 630
+          },
+          "sameAs": [],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "availableLanguage": "English"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://howolddoilook.art/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does the AI age estimation work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our AI analyzes facial features using advanced computer vision technology powered by Amazon Rekognition to estimate your age based on visual characteristics."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is my photo stored or shared?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, your privacy is our priority. Photos are analyzed in real-time and not stored on our servers. The analysis happens instantly and your image is immediately discarded."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is a Vibe Tag?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A Vibe Tag is a unique, positive phrase that captures your energy and personality beyond just a number. It's our way of celebrating what makes you uniquely you."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this service free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! Our age estimation and Vibe Tag analysis is completely free to use. No registration or payment required."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://howolddoilook.art/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://howolddoilook.art/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Articles",
+              "item": "https://howolddoilook.art/articles/"
+            }
+          ]
+        },
+        {
+          "@type": "ImageObject",
+          "@id": "https://howolddoilook.art/#images",
+          "name": "AI Age Analysis Examples",
+          "description": "Before and after examples of AI age analysis with Vibe Tag results showing how our technology provides positive personality insights beyond just age estimation.",
+          "url": "https://howolddoilook.art/og-image.jpg",
+          "width": 1200,
+          "height": 630,
+          "contentUrl": "https://howolddoilook.art/og-image.jpg",
+          "thumbnailUrl": "https://howolddoilook.art/og-image.jpg",
+          "author": {
+            "@type": "Organization",
+            "name": "Lumin AI",
+            "url": "https://howolddoilook.art/"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Lumin AI",
+            "url": "https://howolddoilook.art/"
+          },
+          "license": "https://creativecommons.org/licenses/by/4.0/",
+          "acquireLicensePage": "https://howolddoilook.art/",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@type": "WebApplication",
+            "@id": "https://howolddoilook.art/#webapp"
+          }
+        }
+      ]
+    }
+    </script>
 
     <style>
       html { scroll-behavior: smooth; }
+
+      /* Critical CSS for faster perceived loading */
+      .above-the-fold {
+        background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+      }
+
+      /* Optimize font loading */
+      @font-face {
+        font-family: 'Noto Sans';
+        font-display: swap;
+        src: url('https://fonts.gstatic.com/s/notosans/v35/o-0IIpQlx3QUlC5A4PNb5g.woff2') format('woff2');
+      }
     </style>
+
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+    <!-- Performance Monitoring -->
+    <script>
+      // Monitor Core Web Vitals
+      function reportWebVitals(metric) {
+        console.log('Web Vital:', metric.name, metric.value, metric);
+        // In production, send to analytics service
+        if (typeof gtag !== 'undefined') {
+          gtag('event', metric.name, {
+            value: Math.round(metric.value),
+            event_category: 'Web Vitals',
+            event_label: metric.id,
+            non_interaction: true
+          });
+        }
+      }
+
+      // Simple Web Vitals monitoring
+      function observeWebVitals() {
+        // Largest Contentful Paint (LCP)
+        new PerformanceObserver((entryList) => {
+          const entries = entryList.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          reportWebVitals({
+            name: 'LCP',
+            value: lastEntry.startTime,
+            id: lastEntry.id
+          });
+        }).observe({entryTypes: ['largest-contentful-paint']});
+
+        // First Input Delay (FID)
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            reportWebVitals({
+              name: 'FID',
+              value: entry.processingStart - entry.startTime,
+              id: entry.id
+            });
+          }
+        }).observe({entryTypes: ['first-input']});
+
+        // Cumulative Layout Shift (CLS)
+        let clsValue = 0;
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            if (!entry.hadRecentInput) {
+              clsValue += entry.value;
+            }
+          }
+          if (clsValue > 0) {
+            reportWebVitals({
+              name: 'CLS',
+              value: clsValue,
+              id: 'CLS'
+            });
+          }
+        }).observe({entryTypes: ['layout-shift']});
+      }
+
+      // Initialize monitoring when page loads
+      if ('PerformanceObserver' in window) {
+        observeWebVitals();
+      }
+
+      // Monitor API performance
+      const originalFetch = window.fetch;
+      window.fetch = function(...args) {
+        const start = performance.now();
+        return originalFetch.apply(this, args)
+          .then(response => {
+            const duration = performance.now() - start;
+            console.log('API Call:', args[0], `${duration.toFixed(2)}ms`);
+            return response;
+          })
+          .catch(error => {
+            const duration = performance.now() - start;
+            console.error('API Error:', args[0], `${duration.toFixed(2)}ms`, error);
+            throw error;
+          });
+      };
+    </script>
   </head>
   <body>
     <div id="root"></div>

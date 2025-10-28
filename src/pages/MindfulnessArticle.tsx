@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function MindfulnessArticle() {
   return (
     <div className="bg-white text-brand-dark">
       <Navbar />
+      <Breadcrumb />
 
-      <article className="container mx-auto px-6 py-16 max-w-4xl">
+      <article id="top" className="container mx-auto px-6 py-16 max-w-4xl">
         <Link to="/" className="text-terracotta hover:underline mb-8 inline-block">
           &larr; Back to Home
         </Link>

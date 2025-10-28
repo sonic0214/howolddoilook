@@ -242,5 +242,5 @@ Check logs in Vercel dashboard or run locally:
 
 For issues or questions:
 - Check `开发计划.md` for detailed development roadmap
-- Review `README.md` for setup instructions
+- Review `../README.md` for setup instructions
 - Open GitHub issue for bugs/feature requests

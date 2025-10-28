@@ -1,3 +1,5 @@
+import OptimizedImage from './OptimizedImage';
+
 export default function CaseStudies() {
   return (
     <section id="case-studies" className="py-24 bg-gray-50">
@@ -12,10 +14,11 @@ export default function CaseStudies() {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-left bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
-            <img
-              className="h-80 w-full object-cover"
+            <OptimizedImage
               src="https://images.pexels.com/photos/3772510/pexels-photo-3772510.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Portrait of a young man"
+              alt="Portrait of a young man receiving AI age analysis with adventurous spirit vibe tag"
+              className="h-80 w-full object-cover"
+              loading="lazy"
             />
             <div className="p-6">
               <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
@@ -30,10 +33,11 @@ export default function CaseStudies() {
             </div>
           </div>
           <div className="text-left bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
-            <img
-              className="h-80 w-full object-cover"
+            <OptimizedImage
               src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Portrait of a professional woman"
+              alt="Portrait of a professional woman with poised leader AI age analysis result"
+              className="h-80 w-full object-cover"
+              loading="lazy"
             />
             <div className="p-6">
               <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
@@ -48,10 +52,11 @@ export default function CaseStudies() {
             </div>
           </div>
           <div className="text-left bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
-            <img
-              className="h-80 w-full object-cover"
+            <OptimizedImage
               src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Portrait of a smiling woman in a yellow sweater"
+              alt="Portrait of a smiling woman in yellow sweater with radiant optimist AI age analysis"
+              className="h-80 w-full object-cover"
+              loading="lazy"
             />
             <div className="p-6">
               <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">

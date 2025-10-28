@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import OptimizedImage from './OptimizedImage';
 
 export default function Articles() {
   return (
@@ -13,10 +14,11 @@ export default function Articles() {
       </div>
       <div className="grid md:grid-cols-3 gap-8">
         <div className="group overflow-hidden bg-white rounded-lg border border-gray-200">
-          <img
+          <OptimizedImage
             src="https://images.pexels.com/photos/3762875/pexels-photo-3762875.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="Minimalist skincare products on a tray"
+            alt="Minimalist skincare products arranged on a tray for healthy skin barrier routine"
             className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
           <div className="p-6">
             <p className="text-sm font-bold text-terracotta">SKINCARE</p>
@@ -28,7 +30,7 @@ export default function Articles() {
               defenses.
             </p>
             <Link
-              to="/skincare-article"
+              to="/skincare-article#top"
               className="inline-block mt-4 font-bold text-brand-dark hover:text-terracotta"
             >
               Read More &rarr;
@@ -36,10 +38,11 @@ export default function Articles() {
           </div>
         </div>
         <div className="group overflow-hidden bg-white rounded-lg border border-gray-200">
-          <img
+          <OptimizedImage
             src="https://images.pexels.com/photos/3771045/pexels-photo-3771045.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="Person meditating peacefully in the morning"
+            alt="Person meditating peacefully in morning light for mindfulness and radiance practice"
             className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
           <div className="p-6">
             <p className="text-sm font-bold text-terracotta">MINDFULNESS</p>
@@ -51,7 +54,7 @@ export default function Articles() {
               boost clarity.
             </p>
             <Link
-              to="/mindfulness-article"
+              to="/mindfulness-article#top"
               className="inline-block mt-4 font-bold text-brand-dark hover:text-terracotta"
             >
               Read More &rarr;
@@ -59,10 +62,11 @@ export default function Articles() {
           </div>
         </div>
         <div className="group overflow-hidden bg-white rounded-lg border border-gray-200">
-          <img
+          <OptimizedImage
             src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="Healthy salad bowl with fresh vegetables"
+            alt="Healthy salad bowl with fresh antioxidant-rich vegetables for glowing skin nutrition"
             className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
           />
           <div className="p-6">
             <p className="text-sm font-bold text-terracotta">NUTRITION</p>
@@ -74,7 +78,7 @@ export default function Articles() {
               foods.
             </p>
             <Link
-              to="/nutrition-article"
+              to="/nutrition-article#top"
               className="inline-block mt-4 font-bold text-brand-dark hover:text-terracotta"
             >
               Read More &rarr;

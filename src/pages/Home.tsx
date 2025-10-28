@@ -6,6 +6,7 @@ import Testimonials from '../components/Testimonials';
 import HowItWorks from '../components/HowItWorks';
 import CaseStudies from '../components/CaseStudies';
 import Articles from '../components/Articles';
+import RelatedContent from '../components/RelatedContent';
 import FAQ from '../components/FAQ';
 import CTA from '../components/CTA';
 import Footer from '../components/Footer';
@@ -15,12 +16,13 @@ export default function Home() {
     <div className="bg-white text-brand-dark">
       <Navbar />
       <Hero />
-      <Privacy />
-      <Features />
-      <Testimonials />
       <HowItWorks />
+      <Features />
+      <Privacy />
+      <Testimonials />
       <CaseStudies />
       <Articles />
+      <RelatedContent />
       <FAQ />
       <CTA />
       <Footer />
