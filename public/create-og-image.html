@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create OG Image - Lumin AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Noto Sans', sans-serif;
+            background: #f3f4f6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #1F2937;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .canvas-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #ogCanvas {
+            border: 2px solid #D97706;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: crosshair;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            background: #D97706;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #B45309;
+        }
+        button.secondary {
+            background: #6B7280;
+        }
+        button.secondary:hover {
+            background: #4B5563;
+        }
+        .template-selector {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .template-card {
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .template-card:hover {
+            border-color: #D97706;
+            transform: translateY(-2px);
+        }
+        .template-card.active {
+            border-color: #D97706;
+            background: #FEF3C7;
+        }
+        .template-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #1F2937;
+        }
+        .template-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #6B7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Create OG Image for howolddoilook.art</h1>
+
+        <div class="instructions">
+            <h2>Instructions:</h2>
+            <ol>
+                <li>Choose a template below</li>
+                <li>Click "Generate Image" to create the OG image</li>
+                <li>Right-click the canvas and "Save image as..."</li>
+                <li>Save as <code>og-image.jpg</code> in the <code>/public</code> folder</li>
+                <li>Deploy and test with <a href="https://developers.facebook.com/tools/debug/" target="_blank">Facebook Debugger</a></li>
+            </ol>
+            <p><strong>Dimensions:</strong> 1200 x 630 pixels (automatically set)</p>
+        </div>
+
+        <div class="template-selector">
+            <h2>Choose Template:</h2>
+            <div class="template-grid">
+                <div class="template-card active" data-template="1">
+                    <h3>✨ Gradient Minimal</h3>
+                    <p>Clean gradient background with centered text</p>
+                </div>
+                <div class="template-card" data-template="2">
+                    <h3>🎭 Bold & Simple</h3>
+                    <p>High contrast with large typography</p>
+                </div>
+                <div class="template-card" data-template="3">
+                    <h3>💫 Feature List</h3>
+                    <p>Highlight key features with bullet points</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="ogCanvas" width="1200" height="630"></canvas>
+            <div class="controls">
+                <button onclick="generateImage()">🎨 Generate Image</button>
+                <button onclick="downloadImage()" class="secondary">💾 Download as JPG</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedTemplate = 1;
+        const canvas = document.getElementById('ogCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                selectedTemplate = parseInt(card.dataset.template);
+                generateImage();
+            });
+        });
+
+        function generateImage() {
+            switch(selectedTemplate) {
+                case 1:
+                    drawTemplate1();
+                    break;
+                case 2:
+                    drawTemplate2();
+                    break;
+                case 3:
+                    drawTemplate3();
+                    break;
+            }
+        }
+
+        function drawTemplate1() {
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#D97706');
+            gradient.addColorStop(1, '#1F2937');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // Main title
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 72px Playfair Display, serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('How Old Do I Look?', 600, 240);
+
+            // Subtitle
+            ctx.font = '36px Noto Sans, sans-serif';
+            ctx.fillText('AI Age Guesser & Vibe Analyzer', 600, 310);
+
+            // Features
+            ctx.font = '28px Noto Sans, sans-serif';
+            ctx.fillText('✨ Free  •  Instant  •  Fun', 600, 380);
+
+            // Domain
+            ctx.font = '32px Noto Sans, sans-serif';
+            ctx.fillStyle = '#FEF3C7';
+            ctx.fillText('howolddoilook.art', 600, 500);
+        }
+
+        function drawTemplate2() {
+            // Solid background
+            ctx.fillStyle = '#1F2937';
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // Accent bar
+            ctx.fillStyle = '#D97706';
+            ctx.fillRect(0, 0, 1200, 20);
+
+            // Main title
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 90px Playfair Display, serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('How Old', 600, 220);
+            ctx.fillText('Do I Look?', 600, 330);
+
+            // Tagline
+            ctx.font = '32px Noto Sans, sans-serif';
+            ctx.fillStyle = '#D97706';
+            ctx.fillText('Discover Your Age & Vibe', 600, 420);
+
+            // Domain
+            ctx.font = 'bold 36px Noto Sans, sans-serif';
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillText('howolddoilook.art', 600, 540);
+        }
+
+        function drawTemplate3() {
+            // Background
+            ctx.fillStyle = '#F3F4F6';
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // Left accent
+            ctx.fillStyle = '#D97706';
+            ctx.fillRect(0, 0, 40, 630);
+
+            // Title
+            ctx.fillStyle = '#1F2937';
+            ctx.font = 'bold 64px Playfair Display, serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('How Old Do I Look?', 100, 140);
+
+            // Subtitle
+            ctx.font = '32px Noto Sans, sans-serif';
+            ctx.fillStyle = '#6B7280';
+            ctx.fillText('Upload your photo and discover:', 100, 210);
+
+            // Features
+            ctx.font = '28px Noto Sans, sans-serif';
+            ctx.fillStyle = '#1F2937';
+            const features = [
+                '✓ Your estimated age',
+                '✓ Your unique Vibe Tag',
+                '✓ Positive, fun analysis',
+                '✓ 100% private & secure'
+            ];
+            features.forEach((feature, i) => {
+                ctx.fillText(feature, 120, 280 + (i * 50));
+            });
+
+            // Domain
+            ctx.font = 'bold 36px Noto Sans, sans-serif';
+            ctx.fillStyle = '#D97706';
+            ctx.fillText('howolddoilook.art', 100, 560);
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'og-image.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+        }
+
+        // Generate initial image
+        generateImage();
+    </script>
+</body>
+</html>
