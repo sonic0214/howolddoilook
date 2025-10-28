@@ -6,10 +6,10 @@ export default function CaseStudies() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-serif-display text-4xl md:text-5xl font-bold">
-            A Glimpse of the Glow
+            Real Age Analysis Results
           </h2>
           <p className="mt-4 text-lg text-gray-600">
-            See real examples of how our analysis goes beyond the number.
+            See how others compare their perceived age to their actual age.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
@@ -22,7 +22,7 @@ export default function CaseStudies() {
             />
             <div className="p-6">
               <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
-                Vibe Analysis
+                Age Analysis
               </div>
               <p className="block mt-1 text-base leading-tight font-medium text-black">
                 Estimated Age: 24
@@ -41,7 +41,7 @@ export default function CaseStudies() {
             />
             <div className="p-6">
               <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
-                Vibe Analysis
+                Age Analysis
               </div>
               <p className="block mt-1 text-base leading-tight font-medium text-black">
                 Estimated Age: 35
@@ -60,7 +60,7 @@ export default function CaseStudies() {
             />
             <div className="p-6">
               <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
-                Vibe Analysis
+                Age Analysis
               </div>
               <p className="block mt-1 text-base leading-tight font-medium text-black">
                 Estimated Age: 29

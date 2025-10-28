@@ -23,11 +23,11 @@ export default function Hero() {
     <header id="start" className="container mx-auto px-6 py-16 md:py-24 text-center">
       <h1 className="font-serif-display text-5xl md:text-7xl font-bold leading-tight">
         How Old Do I Look?<br className="hidden md:block" />
-        Go Beyond the <span className="text-terracotta">Age Guesser.</span>
+        <span className="text-terracotta">Look Younger or Older?</span>
       </h1>
       <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-        Get an instant age estimate and discover your unique "Vibe Tag"—a positive, fun
-        analysis that a basic age guesser can't offer.
+        Curious if you look younger or older than your actual age? Our AI analyzes your photo
+        to reveal your perceived age and how you can maintain that youthful appearance.
       </p>
 
       <div id="app-widget" className="mt-12 max-w-xl mx-auto">
@@ -45,7 +45,7 @@ export default function Hero() {
         {appState === AppState.ANALYZING && (
           <div className="py-24">
             <i className="fas fa-spinner fa-spin text-5xl text-terracotta"></i>
-            <p className="mt-4 text-gray-600 font-semibold">Analyzing your glow...</p>
+            <p className="mt-4 text-gray-600 font-semibold">Analyzing your age appearance...</p>
           </div>
         )}
 

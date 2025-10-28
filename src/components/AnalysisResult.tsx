@@ -49,7 +49,7 @@ export default function AnalysisResultComponent({
   };
 
   const shareToTwitter = async () => {
-    const text = `I got "${result.vibeTag}" on How Old Do I Look! 🎉 Try it yourself:`;
+    const text = `I look ${result.age} years old according to AI! Find out if you look younger or older:`;
     const url = 'https://howolddoilook.art/';
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     window.open(twitterUrl, '_blank', 'width=550,height=420');
@@ -71,7 +71,7 @@ export default function AnalysisResultComponent({
   };
 
   const shareToWhatsApp = async () => {
-    const text = `I got "${result.vibeTag}" on How Old Do I Look! 🎉 Try it yourself: https://howolddoilook.art/`;
+    const text = `I look ${result.age} years old according to AI! Try it yourself: https://howolddoilook.art/`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(whatsappUrl, '_blank');
     setShowShareMenu(false);
@@ -90,7 +90,7 @@ export default function AnalysisResultComponent({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'my-vibe-result.png';
+    link.download = 'my-age-result.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -135,7 +135,7 @@ export default function AnalysisResultComponent({
               className="uppercase tracking-wide text-sm font-semibold"
               style={{ color: '#D97706' }}
             >
-              Your Vibe Analysis
+              Your Age Analysis
             </div>
             <p
               className="block mt-1 text-lg leading-tight font-medium"
@@ -144,10 +144,10 @@ export default function AnalysisResultComponent({
               Estimated Age: {result.age}
             </p>
             <p
-              className="mt-4 text-3xl font-serif-display"
+              className="mt-4 text-xl text-gray-600"
               style={{ color: '#6B7280' }}
             >
-              "{result.vibeTag}"
+              Appearance Type: {result.vibeTag}
             </p>
             {result.gender && (
               <p

@@ -312,86 +312,86 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 /**
- * Generate a positive "Vibe Tag" based on age and emotional attributes
+ * Generate an age-related appearance description based on age and emotional attributes
  */
 function generateVibeTag(attributes: FaceAttributes): string {
   const age = attributes.age;
   const smile = attributes.smile || 0;
   const happiness = attributes.emotions?.happiness || 0;
 
-  // Define vibe tags organized by age group and mood
-  const vibeTags = {
+  // Define appearance descriptions organized by age group and mood
+  const appearanceTypes = {
     young_happy: [
-      'Radiant Optimist',
-      'Sunshine Spirit',
-      'Joyful Wanderer',
-      'Collagen Millionaire',
-      'Fresh Energy',
-      'Bright Soul',
+      'Youthful Glow',
+      'Fresh-faced',
+      'Young Spirit',
+      'Bright-eyed',
+      'Radiant Youth',
+      'Fresh Appeal',
     ],
     young_calm: [
-      'Zen Minimalist',
-      'Creative Soul',
-      'Peaceful Soul',
-      'Quiet Confidence',
-      'Serene Presence',
-      'Gentle Spirit',
+      'Natural Beauty',
+      'Understated Charm',
+      'Serene Youth',
+      'Quiet Elegance',
+      'Natural Grace',
+      'Subtle Charm',
     ],
     young_neutral: [
-      'Adventurous Spirit',
-      'Rising Star',
-      'Fresh Perspective',
-      'Bold Essence',
-      'Modern Muse',
-      'Free Spirit',
+      'Modern Look',
+      'Fresh Style',
+      'Contemporary Vibe',
+      'Clean Appearance',
+      'Modern Appeal',
+      'Youthful Style',
     ],
     mid_happy: [
-      'Golden Hour Glow',
-      'Wisdom & Warmth',
-      'Timeless Grace',
-      'Radiant Confidence',
-      'Joyful Heart',
-      'Luminous Soul',
+      'Ageless Beauty',
+      'Timeless Appeal',
+      'Graceful Charm',
+      'Elegant Glow',
+      'Confident Presence',
+      'Polished Look',
     ],
     mid_calm: [
-      'Poised Leader',
-      'Elegant Mind',
-      'Grounded Visionary',
-      'Refined Spirit',
-      'Graceful Power',
-      'Balanced Soul',
+      'Refined Beauty',
+      'Classic Style',
+      'Sophisticated Charm',
+      'Polished Presence',
+      'Understated Elegance',
+      'Graceful Appeal',
     ],
     mid_neutral: [
-      'Refined Energy',
-      'Balanced Spirit',
-      'Steady Flame',
-      'Distinguished Aura',
-      'Sophisticated Presence',
-      'Classic Beauty',
+      'Professional Look',
+      'Established Style',
+      'Mature Appearance',
+      'Distinguished Presence',
+      'Refined Style',
+      'Classic Look',
     ],
     mature_happy: [
-      'Radiant Sage',
-      'Ageless Joy',
-      'Luminous Soul',
-      'Timeless Wisdom',
-      'Golden Spirit',
-      'Eternal Sunshine',
+      'Wise Beauty',
+      'Eternal Youth',
+      'Timeless Charm',
+      'Graceful Wisdom',
+      'Golden Years',
+      'Ageless Spirit',
     ],
     mature_calm: [
+      'Noble Presence',
       'Serene Wisdom',
-      'Graceful Presence',
-      'Eternal Calm',
-      'Noble Spirit',
-      'Peaceful Authority',
-      'Tranquil Sage',
+      'Graceful Authority',
+      'Peaceful Beauty',
+      'Elegant Age',
+      'Distinguished Charm',
     ],
     mature_neutral: [
-      'Distinguished Aura',
-      'Timeless Essence',
-      'Noble Spirit',
-      'Refined Elegance',
-      'Majestic Presence',
-      'Ageless Grace',
+      'Respected Presence',
+      'Classic Beauty',
+      'Elegant Style',
+      'Timeless Appeal',
+      'Mature Charm',
+      'Graceful Look',
     ],
   };
 
@@ -415,10 +415,10 @@ function generateVibeTag(attributes: FaceAttributes): string {
     moodGroup = 'neutral';
   }
 
-  // Get the appropriate tag array
-  const key = `${ageGroup}_${moodGroup}` as keyof typeof vibeTags;
-  const options = vibeTags[key];
+  // Get the appropriate appearance type array
+  const key = `${ageGroup}_${moodGroup}` as keyof typeof appearanceTypes;
+  const options = appearanceTypes[key];
 
-  // Return a random tag from the array
+  // Return a random appearance type from the array
   return options[Math.floor(Math.random() * options.length)];
 }
