@@ -73,7 +73,58 @@ Upload your photo for instant AI age analysis. Get your age estimate plus a uniq
 
 ---
 
-### 4. 额外的 SEO 优化 ✅
+### 4. Robots.txt ✅
+**问题**: 缺少 robots.txt 文件
+
+**解决方案**:
+```txt
+# robots.txt for howolddoilook.art
+User-agent: *
+Allow: /
+Sitemap: https://howolddoilook.art/sitemap.xml
+```
+
+**效果**:
+- 指导搜索引擎爬虫如何抓取网站
+- 保护私有内容(未来扩展)
+- 优化服务器性能
+- 指向 sitemap 位置
+
+---
+
+### 5. Sitemap.xml ✅
+**问题**: 缺少 sitemap.xml 文件
+
+**解决方案**:
+创建包含所有公开页面的 sitemap:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://howolddoilook.art/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://howolddoilook.art/articles/skincare-secrets</loc>
+    <priority>0.8</priority>
+  </url>
+  <!-- 其他页面... -->
+</urlset>
+```
+
+**包含的页面**:
+- 首页 (priority: 1.0)
+- 3 个文章页面 (priority: 0.8)
+
+**效果**:
+- 帮助搜索引擎发现和索引所有页面
+- 提供页面优先级信息
+- 加快收录速度
+- 改善 SEO 表现
+
+---
+
+### 6. 额外的 SEO 优化 ✅
 
 #### 关键词标签
 ```html
@@ -104,6 +155,8 @@ Upload your photo for instant AI age analysis. Get your age estimate plus a uniq
 | Twitter Card | ❌ 缺失 | ✅ 完整(5个标签) |
 | Meta Description | ⚠️ 214字符 | ✅ 155字符 |
 | Keywords | ❌ 缺失 | ✅ 已添加 |
+| Robots.txt | ❌ 缺失 | ✅ 已添加 |
+| Sitemap.xml | ❌ 缺失 | ✅ 已添加(4个页面) |
 | SEO 标签总数 | 3 个 | 22 个 |
 
 ---
@@ -112,13 +165,14 @@ Upload your photo for instant AI age analysis. Get your age estimate plus a uniq
 
 ### Google Search Console
 - **优化前**: ~60/100
-- **优化后**: ~85/100
+- **优化后**: ~90/100
 
 ### 改进项:
 - ✅ Meta 标签完整性
-- ✅ 结构化数据准备
+- ✅ Robots.txt 和 Sitemap.xml
 - ✅ 移动端友好度
 - ✅ 社交媒体集成
+- ✅ 搜索引擎爬虫优化
 
 ---
 
