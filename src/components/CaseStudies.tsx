@@ -13,7 +13,7 @@ export default function CaseStudies() {
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="text-left bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
+          <div className="text-left bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-orange-100 hover:border-orange-200 transition-colors">
             <OptimizedImage
               src="https://images.pexels.com/photos/3772510/pexels-photo-3772510.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Portrait of a young man receiving AI age analysis with adventurous spirit vibe tag"
@@ -21,18 +21,22 @@ export default function CaseStudies() {
               loading="lazy"
             />
             <div className="p-6">
-              <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
-                Age Analysis
+              <div className="inline-block uppercase tracking-wide text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
+                AGE ANALYSIS
               </div>
-              <p className="block mt-1 text-base leading-tight font-medium text-black">
-                Estimated Age: 24
-              </p>
-              <p className="mt-2 text-gray-500 text-3xl font-serif-display">
-                "Adventurous Spirit"
-              </p>
+              <div className="mb-3">
+                <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
+                <div className="text-2xl font-bold text-gray-900">24 years</div>
+              </div>
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
+                <div className="text-sm font-semibold text-orange-600 mb-1">Appearance Type</div>
+                <div className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  Adventurous Spirit
+                </div>
+              </div>
             </div>
           </div>
-          <div className="text-left bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
+          <div className="text-left bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-orange-100 hover:border-orange-200 transition-colors">
             <OptimizedImage
               src="https://images.pexels.com/photos/762080/pexels-photo-762080.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Portrait of a professional woman with poised leader AI age analysis result"
@@ -40,18 +44,22 @@ export default function CaseStudies() {
               loading="lazy"
             />
             <div className="p-6">
-              <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
-                Age Analysis
+              <div className="inline-block uppercase tracking-wide text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
+                AGE ANALYSIS
               </div>
-              <p className="block mt-1 text-base leading-tight font-medium text-black">
-                Estimated Age: 35
-              </p>
-              <p className="mt-2 text-gray-500 text-3xl font-serif-display">
-                "Poised Leader"
-              </p>
+              <div className="mb-3">
+                <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
+                <div className="text-2xl font-bold text-gray-900">35 years</div>
+              </div>
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
+                <div className="text-sm font-semibold text-orange-600 mb-1">Appearance Type</div>
+                <div className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  Poised Leader
+                </div>
+              </div>
             </div>
           </div>
-          <div className="text-left bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
+          <div className="text-left bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-orange-100 hover:border-orange-200 transition-colors">
             <OptimizedImage
               src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Portrait of a smiling woman in yellow sweater with radiant optimist AI age analysis"
@@ -59,15 +67,19 @@ export default function CaseStudies() {
               loading="lazy"
             />
             <div className="p-6">
-              <div className="uppercase tracking-wide text-sm text-terracotta font-semibold">
-                Age Analysis
+              <div className="inline-block uppercase tracking-wide text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
+                AGE ANALYSIS
               </div>
-              <p className="block mt-1 text-base leading-tight font-medium text-black">
-                Estimated Age: 29
-              </p>
-              <p className="mt-2 text-gray-500 text-3xl font-serif-display">
-                "Radiant Optimist"
-              </p>
+              <div className="mb-3">
+                <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
+                <div className="text-2xl font-bold text-gray-900">29 years</div>
+              </div>
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
+                <div className="text-sm font-semibold text-orange-600 mb-1">Appearance Type</div>
+                <div className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                  Radiant Optimist
+                </div>
+              </div>
             </div>
           </div>
         </div>

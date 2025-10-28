@@ -116,10 +116,9 @@ export default function AnalysisResultComponent({
       <div
         ref={resultRef}
         data-result-card
-        className="text-left rounded-lg shadow-xl overflow-hidden"
+        className="text-left rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-white via-orange-50 to-amber-50"
         style={{
-          backgroundColor: '#ffffff',
-          border: '1px solid #E5E7EB'
+          border: '2px solid #FED7AA'
         }}
       >
         <div className="md:flex">
@@ -128,39 +127,38 @@ export default function AnalysisResultComponent({
               className="h-48 w-full object-cover md:w-48"
               src={uploadedImage}
               alt="Your photo"
+              style={{ filter: 'brightness(1.05) contrast(1.02)' }}
             />
           </div>
-          <div className="p-8">
+          <div className="p-8 bg-white/60 backdrop-blur-sm">
             <div
-              className="uppercase tracking-wide text-sm font-semibold"
-              style={{ color: '#D97706' }}
+              className="inline-block uppercase tracking-wide text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"
             >
-              Your Age Analysis
+              YOUR AGE ANALYSIS
             </div>
-            <p
-              className="block mt-1 text-lg leading-tight font-medium"
-              style={{ color: '#000000' }}
-            >
-              Estimated Age: {result.age}
-            </p>
-            <p
-              className="mt-4 text-xl text-gray-600"
-              style={{ color: '#6B7280' }}
-            >
-              Appearance Type: {result.vibeTag}
-            </p>
-            {result.gender && (
-              <p
-                className="mt-2 text-sm"
-                style={{ color: '#4B5563' }}
+            <div className="mt-3">
+              <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
+              <div
+                className="text-3xl font-bold text-gray-900"
               >
-                Gender: {result.gender}
-              </p>
+                {result.age} years
+              </div>
+            </div>
+            <div className="mt-4 bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-lg border-2 border-orange-200">
+              <div className="text-sm font-semibold text-orange-600 mb-1">Your Appearance Type</div>
+              <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                {result.vibeTag}
+              </div>
+            </div>
+            {result.gender && (
+              <div className="mt-3 inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
+                <i className="fas fa-venus-mars mr-2 text-gray-500"></i>
+                {result.gender}
+              </div>
             )}
             {/* Watermark */}
             <div
-              className="mt-6 text-xs"
-              style={{ color: '#9CA3AF' }}
+              className="mt-6 text-xs font-medium text-orange-400"
             >
               howolddoilook.art
             </div>
