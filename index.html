@@ -557,32 +557,72 @@
         }
       }
 
-      // Initialize CSS loading optimization
+      // Initialize CSS loading optimization (run immediately)
       async function initCSSOptimization() {
         try {
-          const cssFile = await getCSSFileName();
+          // Check for blocking CSS immediately and remove it
+          const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+          for (let link of cssLinks) {
+            if (link.href.includes('/assets/index-') && link.href.includes('.css')) {
+              const href = link.href;
+              link.remove(); // Remove immediately to prevent blocking
+              console.log('Removed blocking CSS immediately:', href);
 
-          // Use requestIdleCallback for better performance
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(async () => {
-              await loadCSSAsync(cssFile);
-            }, { timeout: 1000 }); // Shorter timeout for better UX
-          } else {
-            // Fallback for older browsers
-            setTimeout(async () => {
-              await loadCSSAsync(cssFile);
-            }, 50); // Very short delay
+              // Load CSS asynchronously after a very short delay
+              setTimeout(async () => {
+                await loadCSSAsync(href);
+              }, 10); // Minimal delay to ensure render starts
+              return;
+            }
           }
         } catch (error) {
           console.error('CSS optimization failed:', error);
         }
       }
 
-      // Start optimization immediately
+      // Start optimization immediately (run before DOM ready)
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCSSOptimization);
+        // Run immediately to remove blocking CSS before render
+        initCSSOptimization();
+        document.addEventListener('DOMContentLoaded', () => {
+          // Additional optimizations after DOM ready
+          optimizeCriticalPath();
+        });
       } else {
         initCSSOptimization();
+        optimizeCriticalPath();
+      }
+
+      // Critical path optimization
+      function optimizeCriticalPath() {
+        // Fix undefined requests
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+          const url = args[0];
+          if (typeof url === 'string' && url.includes('undefined')) {
+            console.warn('Blocking undefined request:', url);
+            return Promise.reject(new Error('Invalid URL: contains undefined'));
+          }
+          return originalFetch.apply(this, args);
+        };
+
+        // Optimize module preloading
+        const scripts = document.querySelectorAll('script[type="module"]');
+        scripts.forEach(script => {
+          if (script.src && script.src.includes('/assets/index-')) {
+            script.defer = true;
+          }
+        });
+
+        // Preload critical resources
+        const criticalJS = document.querySelector('script[src*="index-DfGB9424.js"]');
+        if (criticalJS && !document.querySelector(`link[href="${criticalJS.src}"]`)) {
+          const preloadLink = document.createElement('link');
+          preloadLink.rel = 'modulepreload';
+          preloadLink.href = criticalJS.src;
+          preloadLink.crossorigin = 'anonymous';
+          document.head.appendChild(preloadLink);
+        }
       }
     </script>
   </head>
