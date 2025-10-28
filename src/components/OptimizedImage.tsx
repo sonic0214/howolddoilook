@@ -19,19 +19,47 @@ export default function OptimizedImage({
 }: OptimizedImageProps) {
   const [error, setError] = useState(false);
 
-  // Convert Pexels URLs to WebP format
-  const getWebPSrc = (originalSrc: string) => {
+  // Optimize Pexels URLs for better performance
+  const getOptimizedSrc = (originalSrc: string) => {
     if (originalSrc.includes('pexels.com')) {
-      // Pexels supports WebP format via URL parameter
-      return originalSrc.replace('&cs=tinysrgb', '&cs=tinysrgb&format=webp');
+      // Ensure we're using optimal parameters for performance
+      let optimized = originalSrc;
+
+      // Use higher compression for better performance
+      if (optimized.includes('cs=tinysrgb')) {
+        optimized = optimized.replace('cs=tinysrgb', 'cs=tinysrgb&dpr=1&q=80');
+      }
+
+      // Add WebP format support
+      if (!optimized.includes('format=')) {
+        optimized += '&format=webp';
+      }
+
+      return optimized;
     }
     return originalSrc;
   };
 
-  const webpSrc = getWebPSrc(src);
+  // Get fallback JPEG source
+  const getFallbackSrc = (originalSrc: string) => {
+    if (originalSrc.includes('pexels.com')) {
+      let optimized = originalSrc;
+
+      // Use higher compression for better performance
+      if (optimized.includes('cs=tinysrgb')) {
+        optimized = optimized.replace('cs=tinysrgb', 'cs=tinysrgb&dpr=1&q=80');
+      }
+
+      return optimized;
+    }
+    return originalSrc;
+  };
+
+  const webpSrc = getOptimizedSrc(src);
+  const fallbackSrc = getFallbackSrc(src);
 
   if (error) {
-    // Fallback to original image if WebP fails
+    // Final fallback to original image
     return (
       <img
         src={src}
@@ -40,7 +68,6 @@ export default function OptimizedImage({
         width={width}
         height={height}
         loading={loading}
-        onError={() => setError(true)}
       />
     );
   }
@@ -49,7 +76,7 @@ export default function OptimizedImage({
     <picture>
       <source srcSet={webpSrc} type="image/webp" />
       <img
-        src={src}
+        src={fallbackSrc}
         alt={alt}
         className={className}
         width={width}

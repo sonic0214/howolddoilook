@@ -28,9 +28,10 @@ export default function SkincareArticle() {
             The Minimalist's Guide to a Healthy Skin Barrier
           </h1>
           <OptimizedImage
-            src="https://images.pexels.com/photos/3762875/pexels-photo-3762875.jpeg?auto=compress&cs=tinysrgb&w=1200"
+            src="https://images.pexels.com/photos/3762875/pexels-photo-3762875.jpeg?auto=compress&cs=tinysrgb&w=800"
             alt="Minimalist skincare products arranged for healthy skin barrier routine"
             className="w-full h-96 object-cover rounded-lg"
+            loading="eager"
           />
         </div>
 

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
+import OptimizedImage from '../components/OptimizedImage';
 
 export default function NutritionArticle() {
   return (
@@ -19,10 +20,11 @@ export default function NutritionArticle() {
           <h1 className="font-serif-display text-4xl md:text-5xl font-bold mb-6">
             Eating for Your Glow: Top 5 Antioxidant-Rich Foods
           </h1>
-          <img
-            src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Healthy salad bowl"
+          <OptimizedImage
+            src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Healthy salad bowl with fresh antioxidant-rich vegetables for glowing skin nutrition"
             className="w-full h-96 object-cover rounded-lg"
+            loading="eager"
           />
         </div>
 

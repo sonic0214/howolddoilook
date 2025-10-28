@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
+import OptimizedImage from '../components/OptimizedImage';
 
 export default function MindfulnessArticle() {
   return (
@@ -19,10 +20,11 @@ export default function MindfulnessArticle() {
           <h1 className="font-serif-display text-4xl md:text-5xl font-bold mb-6">
             How 5 Minutes of Morning Stillness Can Change Your Day
           </h1>
-          <img
-            src="https://images.pexels.com/photos/3771045/pexels-photo-3771045.jpeg?auto=compress&cs=tinysrgb&w=1200"
-            alt="Person meditating in the morning"
+          <OptimizedImage
+            src="https://images.pexels.com/photos/3771045/pexels-photo-3771045.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Person meditating peacefully in morning light for mindfulness and radiance practice"
             className="w-full h-96 object-cover rounded-lg"
+            loading="eager"
           />
         </div>
 
