@@ -59,10 +59,10 @@
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//images.pexels.com">
 
-    <!-- Security Headers -->
+    <!-- Security Headers (meta tags) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <!-- Note: X-Frame-Options is set via HTTP headers in vercel.json, not meta tags -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- Format Detection -->
