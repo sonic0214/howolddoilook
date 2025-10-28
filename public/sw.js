@@ -4,7 +4,10 @@ const urlsToCache = [
   '/manifest.json',
   '/og-image.jpg',
   '/font-awesome-minimal.css',
-  'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap'
+  'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap',
+  // Essential icon files
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 // Install event - cache resources
