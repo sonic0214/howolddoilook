@@ -1,10 +1,10 @@
-const CACHE_NAME = 'lumin-ai-v1';
+const CACHE_NAME = 'lumin-ai-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
   '/og-image.jpg',
-  'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+  '/font-awesome-minimal.css',
+  'https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap'
 ];
 
 // Install event - cache resources
@@ -12,20 +12,34 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        return cache.addAll(urlsToCache);
+        // Cache each resource individually to avoid failures if one doesn't exist
+        return Promise.allSettled(
+          urlsToCache.map(url =>
+            cache.add(url).catch(error => {
+              console.warn('Failed to cache resource:', url, error);
+            })
+          )
+        );
       })
   );
 });
 
 // Fetch event - serve from cache when offline
 self.addEventListener('fetch', (event) => {
+  const request = event.request;
+
   // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
+  if (!request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  // Skip API calls
-  if (event.request.url.includes('/api/')) {
+  // Skip API calls and invalid URLs
+  if (request.url.includes('/api/') || request.url.includes('undefined')) {
+    return;
+  }
+
+  // Only handle GET requests
+  if (request.method !== 'GET') {
     return;
   }
 
