@@ -12,7 +12,7 @@ export interface AmazonRekognitionData {
 // 输出数据结构
 export interface VibeGenerationResult {
   tag: string; // 生成的最终标签名
-  rarity: 'Common' | 'Rare' | 'Epic' | 'Legendary'; // 稀有度等级
+  rarity: 'Classic' | 'Rare' | 'Epic' | 'Legendary'; // 稀有度等级
   description: string; // 对应的魅力解读
   cardType: 'classic' | 'story' | 'epic'; // 卡片样式类型
 }
@@ -160,27 +160,27 @@ function preprocessApiData(apiData: AmazonRekognitionData): ProcessedApiData {
 }
 
 // 根据稀有度确定卡片类型
-function getCardTypeByRarity(rarity: 'Common' | 'Rare' | 'Epic' | 'Legendary'): 'classic' | 'story' | 'epic' {
+function getCardTypeByRarity(rarity: 'Classic' | 'Rare' | 'Epic' | 'Legendary'): 'classic' | 'story' | 'epic' {
   switch (rarity) {
     case 'Epic':
     case 'Legendary':
       return 'epic';
     case 'Rare':
       return 'story';
-    case 'Common':
+    case 'Classic':
     default:
       return 'classic';
   }
 }
 
 // 随机决定稀有度（游戏化体验）
-function determineRandomRarity(): 'Common' | 'Rare' | 'Epic' | 'Legendary' {
+function determineRandomRarity(): 'Classic' | 'Rare' | 'Epic' | 'Legendary' {
   const random = Math.random() * 100;
 
-  if (random < 1) return 'Legendary';      // 1% 传说
-  if (random < 8) return 'Epic';           // 7%  史诗
-  if (random < 25) return 'Rare';          // 17% 稀有
-  return 'Common';                         // 75% 常见
+  if (random < 3) return 'Legendary';      // 3% 传说
+  if (random < 20) return 'Epic';          // 17% 史诗
+  if (random < 50) return 'Rare';          // 30% 稀有
+  return 'Classic';                        // 50% 经典
 }
 
 // 3.2. 核心实现逻辑：generateVibeTag(apiData) 函数
@@ -260,7 +260,7 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
     // 第三步：设定默认/备用方案 (Fallback)
     return {
       tag: 'Unique You',
-      rarity: 'Common',
+      rarity: 'Classic',
       description: 'Every version of you is a limited edition in the universe, no definition needed, naturally radiant.',
       cardType: 'classic'
     };
@@ -355,7 +355,7 @@ export function generateVibeTagLegacy(faceData: any): VibeGenerationResult {
     console.error('Legacy vibe generation error:', error);
     return {
       tag: 'Unique You',
-      rarity: 'Common',
+      rarity: 'Classic',
       description: 'Every version of you is a limited edition in the universe, no definition needed, naturally radiant.',
       cardType: 'classic'
     };

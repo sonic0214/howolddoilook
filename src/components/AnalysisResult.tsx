@@ -198,7 +198,7 @@ export default function AnalysisResultComponent({
 
   // Determine card type and render accordingly
   const cardType = result.cardType || 'classic';
-  const rarity = result.rarity || 'Common';
+  const rarity = result.rarity || 'Classic';
 
   const renderClassicCard = () => (
     <div

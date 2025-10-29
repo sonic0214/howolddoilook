@@ -21,7 +21,7 @@ export interface AnalysisResult {
   gender: string;
   vibeTag: string;
   cardType?: 'classic' | 'story' | 'epic';
-  rarity?: 'Common' | 'Rare' | 'Epic' | 'Legendary';
+  rarity?: 'Classic' | 'Rare' | 'Epic' | 'Legendary';
   description?: string;
   attributes?: Partial<FaceAttributes>;
 }
