@@ -1,0 +1,141 @@
+name: PR Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    name: Automated Code Review
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        id: lint
+        run: |
+          echo "Running ESLint..."
+          npm run lint > lint-output.txt 2>&1 || echo "Linting found issues"
+          cat lint-output.txt
+        continue-on-error: true
+
+      - name: Run type checking
+        id: typecheck
+        run: |
+          echo "Running TypeScript compiler..."
+          npx tsc --noEmit > typecheck-output.txt 2>&1 || echo "Type checking found issues"
+          cat typecheck-output.txt
+        continue-on-error: true
+
+      - name: Get changed files
+        id: changed-files
+        run: |
+          echo "Getting changed files..."
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed-files.txt
+          cat changed-files.txt
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          cat changed-files.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Generate review summary
+        id: review-summary
+        run: |
+          echo "# 🤖 自动代码审查报告" > review-comment.md
+          echo "" >> review-comment.md
+          echo "## 📋 变更文件列表" >> review-comment.md
+          echo '```' >> review-comment.md
+          cat changed-files.txt >> review-comment.md
+          echo '```' >> review-comment.md
+          echo "" >> review-comment.md
+
+          echo "## 🔍 Lint 检查结果" >> review-comment.md
+          if [ -s lint-output.txt ]; then
+            echo '```' >> review-comment.md
+            head -50 lint-output.txt >> review-comment.md
+            echo '```' >> review-comment.md
+          else
+            echo "✅ 未发现 linting 问题" >> review-comment.md
+          fi
+          echo "" >> review-comment.md
+
+          echo "## 🔍 类型检查结果" >> review-comment.md
+          if [ -s typecheck-output.txt ]; then
+            echo '```' >> review-comment.md
+            head -50 typecheck-output.txt >> review-comment.md
+            echo '```' >> review-comment.md
+          else
+            echo "✅ 未发现类型错误" >> review-comment.md
+          fi
+          echo "" >> review-comment.md
+
+          echo "## 💡 审查建议" >> review-comment.md
+          echo "" >> review-comment.md
+          echo "### 代码质量检查点:" >> review-comment.md
+          echo "- [ ] 核心逻辑是否正确实现?" >> review-comment.md
+          echo "- [ ] 是否存在安全漏洞 (XSS, SQL注入等)?" >> review-comment.md
+          echo "- [ ] 是否存在性能问题?" >> review-comment.md
+          echo "- [ ] 代码是否遵循最佳实践?" >> review-comment.md
+          echo "- [ ] 变量和函数命名是否清晰?" >> review-comment.md
+          echo "- [ ] 错误处理是否完善?" >> review-comment.md
+          echo "- [ ] 是否需要添加测试?" >> review-comment.md
+          echo "" >> review-comment.md
+          echo "---" >> review-comment.md
+          echo "*由 GitHub Actions 自动生成*" >> review-comment.md
+
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const comment = fs.readFileSync('review-comment.md', 'utf8');
+
+            // Find existing bot comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('🤖 自动代码审查报告')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
