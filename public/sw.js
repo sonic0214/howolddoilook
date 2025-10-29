@@ -25,6 +25,14 @@ self.addEventListener('install', (event) => {
         );
       })
   );
+  self.skipWaiting();
+});
+
+self.addEventListener('message', (event) => {
+  if (!event.data) return;
+  if (event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 // Fetch event - prefer fresh HTML and keep static assets cached
@@ -93,6 +101,10 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(async () => {
+      const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      clients.forEach((client) => client.postMessage({ type: 'SW_UPDATED' }));
+      return self.clients.claim();
+    })
   );
 });
