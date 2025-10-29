@@ -4,7 +4,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-  "_buildTimestamp": "2025-10-29T04:06:00Z",
   "rewrites": [
     {
       "source": "/api/(.*)",
