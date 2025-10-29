@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { useEffect, Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from '@vercel/analytics/react';
 import useServiceWorker from './hooks/useServiceWorker';
 import LoadingSpinner from './components/LoadingSpinner';
 
@@ -123,6 +124,7 @@ function App() {
         />
         </Routes>
       </Router>
+      <Analytics />
     </HelmetProvider>
   );
 }
