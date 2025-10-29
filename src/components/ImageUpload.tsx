@@ -4,6 +4,7 @@ import imageCompression from 'browser-image-compression';
 import { AppState, AnalysisResult, ApiResponse } from '../types';
 import { generateVibeTagLegacy } from '../utils/vibeGenerator';
 import { runVibeGeneratorTests } from '../utils/testVibeGenerator';
+import analytics from '../utils/analytics';
 import axios from 'axios';
 
 interface ImageUploadProps {
@@ -72,6 +73,16 @@ export default function ImageUpload({
       setAppState(AppState.ERROR);
       return;
     }
+
+    // 记录分析开始时间
+    const analysisStartTime = Date.now();
+
+    // 发送分析开始埋点
+    analytics.analysisStart({
+      fileType: selectedFile.type,
+      fileSize: selectedFile.size,
+      isProduction: import.meta.env.PROD
+    });
 
     setAppState(AppState.ANALYZING);
 
@@ -164,15 +175,40 @@ export default function ImageUpload({
       }
 
       if (response.data.success && response.data.data) {
+        // 发送分析成功埋点
+        analytics.analysisComplete({
+          success: true,
+          age: response.data.data.age,
+          gender: response.data.data.gender,
+          vibeTag: response.data.data.vibeTag,
+          rarity: response.data.data.rarity,
+          cardType: response.data.data.cardType,
+          duration: Date.now() - analysisStartTime
+        });
+
         setResult(response.data.data);
         setUploadedImage(preview);
         setAppState(AppState.RESULT);
       } else {
+        // 发送分析失败埋点
+        analytics.analysisComplete({
+          success: false,
+          errorMessage: response.data.error || 'Analysis failed',
+          duration: Date.now() - analysisStartTime
+        });
+
         setError(response.data.error || 'Analysis failed');
         setAppState(AppState.ERROR);
       }
     } catch (error: any) {
       console.error('Analysis error:', error);
+
+      // 发送分析错误埋点
+      analytics.analysisComplete({
+        success: false,
+        errorMessage: error.message || 'Unknown error',
+        duration: Date.now() - analysisStartTime
+      });
 
       if (error.response?.data?.error) {
         setError(error.response.data.error);
@@ -244,7 +280,14 @@ export default function ImageUpload({
       </div>
 
       <button
-        onClick={handleAnalyze}
+        onClick={() => {
+          // 发送按钮点击埋点
+          analytics.buttonClick('analyze_photo', {
+            hasSelectedFile: !!selectedFile,
+            fileType: selectedFile?.type
+          });
+          handleAnalyze();
+        }}
         disabled={!selectedFile}
         aria-describedby={!selectedFile ? "upload-help" : undefined}
         className={`mt-6 w-full py-4 text-xl font-bold shadow-lg rounded-md transition-colors ${
