@@ -111,50 +111,46 @@ export default function AnalysisResultComponent({
   };
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       {/* Result Card - This will be captured */}
-      <div
-        ref={resultRef}
-        data-result-card
-        className="text-left rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-white via-orange-50 to-amber-50"
-        style={{
-          border: '2px solid #FED7AA'
-        }}
-      >
-        <div className="md:flex">
-          <div className="md:flex-shrink-0">
+      <div className="w-full overflow-hidden rounded-xl shadow-2xl bg-white">
+        <div
+          ref={resultRef}
+          data-result-card
+          className="bg-white shadow-2xl rounded-xl flex overflow-hidden"
+          style={{
+            width: '800px',
+            height: '450px',
+            maxWidth: '100%'
+          }}
+        >
+          {/* Left side: User photo */}
+          <div className="w-1/2">
             <img
-              className="h-48 w-full object-cover md:w-48"
               src={uploadedImage}
-              alt="Your photo"
+              className="w-full h-full object-cover"
+              alt="User selfie for age analysis"
               style={{ filter: 'brightness(1.05) contrast(1.02)' }}
             />
           </div>
-          <div className="p-8 bg-white/60 backdrop-blur-sm">
-            <div
-              className="inline-block uppercase tracking-wide text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"
-            >
-              YOUR AGE ANALYSIS
+
+          {/* Right side: Analysis results */}
+          <div className="w-1/2 p-12 flex flex-col justify-between">
+            <div>
+              <p className="text-sm font-bold tracking-widest text-terracotta uppercase">YOUR ANALYSIS</p>
+              <p className="mt-4 text-lg text-gray-500">Estimated Age</p>
+              <p className="text-7xl font-bold text-brand-dark leading-none">{result.age}</p>
             </div>
-            <div className="mt-3">
-              <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
-              <div
-                className="text-3xl font-bold text-gray-900"
-              >
-                {result.age} years
+
+            <div className="mt-8">
+              <div className="border-t border-gray-200 pt-6">
+                <p className="text-sm font-bold text-terracotta">✨ Your Vibe</p>
+                <p className="font-serif-display text-5xl text-brand-dark mt-2">{result.vibeTag}</p>
               </div>
             </div>
-            <div className="mt-4 bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-lg border-2 border-orange-200">
-              <div className="text-sm font-semibold text-orange-600 mb-1">✨ Your Vibe</div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                {result.vibeTag}
-              </div>
-            </div>
-              {/* Watermark */}
-            <div
-              className="mt-6 text-xs font-medium text-orange-400"
-            >
-              howolddoilook.art
+
+            <div className="mt-auto pt-8">
+              <p className="text-lg font-bold text-brand-dark opacity-50">howolddoilook.art</p>
             </div>
           </div>
         </div>
