@@ -49,18 +49,76 @@ export default function AnalysisResultComponent({
   };
 
   const shareToTwitter = async () => {
-    const text = `I look ${result.age} years old according to AI! Find out if you look younger or older:`;
-    const url = 'https://howolddoilook.art/';
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    window.open(twitterUrl, '_blank', 'width=550,height=420');
-    setShowShareMenu(false);
+    try {
+      // 生成卡片图片
+      const blob = await generateImageBlob();
+      if (blob) {
+        // 将blob转换为base64
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64data = reader.result as string;
+
+          // 上传图片到免费的图片托管服务或使用data URL
+          const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨`;
+          const url = 'https://howolddoilook.art/';
+
+          // 尝试分享图片（Twitter不支持直接分享图片，需要先上传）
+          const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+          window.open(twitterUrl, '_blank', 'width=550,height=420');
+
+          setShowShareMenu(false);
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // 如果图片生成失败，使用原有逻辑
+        const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨`;
+        const url = 'https://howolddoilook.art/';
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(twitterUrl, '_blank', 'width=550,height=420');
+        setShowShareMenu(false);
+      }
+    } catch (error) {
+      console.error('Share error:', error);
+      setShowShareMenu(false);
+    }
   };
 
   const shareToFacebook = async () => {
-    const url = 'https://howolddoilook.art/';
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    window.open(facebookUrl, '_blank', 'width=550,height=420');
-    setShowShareMenu(false);
+    try {
+      // 生成卡片图片
+      const blob = await generateImageBlob();
+      if (blob) {
+        // 将blob转换为base64
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64data = reader.result as string;
+
+          // 创建一个临时的下载链接让用户保存图片
+          const imageUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = 'my-age-result.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(imageUrl);
+
+          // 提示用户手动分享图片
+          alert('卡片图片已下载！请将图片上传到Facebook并分享 📸');
+          setShowShareMenu(false);
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // 如果图片生成失败，使用原有逻辑
+        const url = 'https://howolddoilook.art/';
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+        window.open(facebookUrl, '_blank', 'width=550,height=420');
+        setShowShareMenu(false);
+      }
+    } catch (error) {
+      console.error('Share error:', error);
+      setShowShareMenu(false);
+    }
   };
 
   const shareToLinkedIn = async () => {
@@ -71,10 +129,44 @@ export default function AnalysisResultComponent({
   };
 
   const shareToWhatsApp = async () => {
-    const text = `I look ${result.age} years old according to AI! Try it yourself: https://howolddoilook.art/`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
-    setShowShareMenu(false);
+    try {
+      // 生成卡片图片
+      const blob = await generateImageBlob();
+      if (blob) {
+        // 将blob转换为base64
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64data = reader.result as string;
+
+          // 创建一个临时的下载链接让用户保存图片
+          const imageUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = 'my-age-result.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(imageUrl);
+
+          // 提示用户手动发送图片
+          const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨ Try it yourself: https://howolddoilook.art/\n\n(请分享刚刚下载的卡片图片 📸)`;
+          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+          window.open(whatsappUrl, '_blank');
+
+          setShowShareMenu(false);
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // 如果图片生成失败，使用原有逻辑
+        const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨ Try it yourself: https://howolddoilook.art/`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank');
+        setShowShareMenu(false);
+      }
+    } catch (error) {
+      console.error('Share error:', error);
+      setShowShareMenu(false);
+    }
   };
 
   const downloadImage = async () => {
