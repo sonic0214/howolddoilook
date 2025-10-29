@@ -206,8 +206,8 @@ export default function AnalysisResultComponent({
       data-result-card
       className="bg-white shadow-2xl rounded-xl flex overflow-hidden"
       style={{
-        width: '800px',
-        height: '480px',
+        width: '850px',
+        height: '520px',
         maxWidth: '100%'
       }}
     >
@@ -237,9 +237,18 @@ export default function AnalysisResultComponent({
                 {rarity}
               </p>
             </div>
-            <p className="font-serif-display text-4xl text-brand-dark mt-2 leading-tight">{result.vibeTag}</p>
+            <p
+              className="font-serif-display text-3xl text-brand-dark mt-2 leading-tight break-words"
+              style={{
+                wordBreak: 'break-word',
+                hyphens: 'auto',
+                lineHeight: '1.2'
+              }}
+            >
+              {result.vibeTag}
+            </p>
             {result.description && (
-              <p className="mt-3 text-gray-600 text-sm leading-relaxed line-clamp-4">{result.description}</p>
+              <p className="mt-3 text-gray-600 text-sm leading-relaxed line-clamp-3">{result.description}</p>
             )}
           </div>
         </div>
@@ -257,8 +266,8 @@ export default function AnalysisResultComponent({
       data-result-card
       className="bg-white shadow-2xl rounded-xl flex flex-col overflow-hidden"
       style={{
-        width: '400px',
-        height: '711px',
+        width: '420px',
+        height: '750px',
         maxWidth: '100%'
       }}
     >
@@ -276,18 +285,25 @@ export default function AnalysisResultComponent({
       <div className="h-2/5 p-8 flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-start gap-2">
-            <p className="font-serif-display text-3xl text-brand-dark leading-tight flex-1 pr-2 overflow-hidden" style={{
+            <p
+              className="font-serif-display text-2xl text-brand-dark leading-tight flex-1 pr-2"
+              style={{
+                wordBreak: 'break-word',
+                hyphens: 'auto',
                 display: '-webkit-box',
-                WebkitLineClamp: 2,
+                WebkitLineClamp: 3,
                 WebkitBoxOrient: 'vertical',
-                maxHeight: '3rem'
-              }}>{result.vibeTag}</p>
-            <p className="px-2 py-1 bg-terracotta text-white text-xs font-bold rounded-full whitespace-nowrap">
+                overflow: 'hidden'
+              }}
+            >
+              {result.vibeTag}
+            </p>
+            <p className="px-2 py-1 bg-terracotta text-white text-xs font-bold rounded-full whitespace-nowrap flex-shrink-0">
               {rarity}
             </p>
           </div>
           {result.description && (
-            <p className="mt-3 text-gray-700 text-xs leading-relaxed line-clamp-3">{result.description}</p>
+            <p className="mt-3 text-gray-700 text-xs leading-relaxed line-clamp-4">{result.description}</p>
           )}
         </div>
 
@@ -308,8 +324,8 @@ export default function AnalysisResultComponent({
       data-result-card
       className="relative shadow-2xl rounded-xl overflow-hidden"
       style={{
-        width: '400px',
-        height: '550px',
+        width: '420px',
+        height: '600px',
         maxWidth: '100%'
       }}
     >
@@ -321,7 +337,7 @@ export default function AnalysisResultComponent({
           alt="User selfie for age analysis"
         />
         {/* 渐变蒙层 - 更浅的背景 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent"></div>
       </div>
 
       {/* 内容 */}
@@ -340,17 +356,20 @@ export default function AnalysisResultComponent({
         </div>
 
         {/* 中间内容 */}
-        <div className="text-left">
+        <div className="text-left flex-1 flex flex-col justify-center">
           <p
-            className="font-serif-display text-5xl leading-tight"
+            className="font-serif-display text-4xl leading-tight mb-4"
             style={{
-              textShadow: '0 0 12px rgba(255, 193, 7, 0.6)'
+              textShadow: '0 0 15px rgba(255, 193, 7, 0.8)',
+              wordBreak: 'break-word',
+              hyphens: 'auto',
+              lineHeight: '1.1'
             }}
           >
             {result.vibeTag}
           </p>
           {result.description && (
-            <p className="mt-3 text-white/80 max-w-xs text-xs leading-relaxed line-clamp-4">
+            <p className="text-white/90 max-w-xs text-xs leading-relaxed line-clamp-5">
               {result.description}
             </p>
           )}
@@ -369,16 +388,16 @@ export default function AnalysisResultComponent({
   );
 
   return (
-    <div className="max-w-4xl mx-auto flex flex-col items-center">
+    <div className="max-w-4xl mx-auto flex flex-col items-center px-4">
       {/* Result Card - This will be captured */}
-      <div className="inline-block">
+      <div className="inline-block w-full max-w-fit">
         {cardType === 'epic' && renderEpicCard()}
         {cardType === 'story' && renderStoryCard()}
         {cardType === 'classic' && renderClassicCard()}
       </div>
 
       {/* Action Buttons */}
-      <div className="mt-8 relative w-full max-w-lg">
+      <div className="mt-8 relative w-full max-w-lg sm:max-w-md">
         {/* Share Menu */}
         {showShareMenu && (
           <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-white border-2 border-terracotta rounded-lg shadow-xl p-4 z-10 w-full max-w-sm">
