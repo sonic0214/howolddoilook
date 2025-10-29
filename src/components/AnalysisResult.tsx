@@ -223,57 +223,60 @@ export default function AnalysisResultComponent({
       className="relative shadow-2xl rounded-xl overflow-hidden"
       style={{
         width: '400px',
-        height: '600px',
+        height: '550px',
         maxWidth: '100%'
       }}
     >
-      {/* Background photo with overlay */}
+      {/* 背景图片 - 使用object-contain避免截取 */}
       <div className="absolute inset-0 bg-gray-900">
         <img
           src={uploadedImage}
-          className="absolute inset-0 w-full h-full object-contain p-8 opacity-40"
+          className="absolute inset-0 w-full h-full object-contain p-4"
           alt="User selfie for age analysis"
         />
-        {/* Dark gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+        {/* 渐变蒙层 - 更浅的背景 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
       </div>
 
-      {/* Content overlay */}
-      <div className="relative h-full flex flex-col justify-between text-white p-8">
-        {/* Top content */}
-        <div className="text-center">
-          <p className="text-sm font-medium tracking-widest uppercase opacity-80">Your Analysis</p>
+      {/* 内容 */}
+      <div className="relative z-10 p-8 flex flex-col justify-between h-full text-white">
+        {/* 右上角标签 */}
+        <div className="text-right">
+          <span
+            className="px-3 py-1 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full tracking-widest"
+            style={{
+              boxShadow: '0 0 12px rgba(255, 193, 7, 0.6)',
+              textShadow: '0 0 12px rgba(255, 193, 7, 0.6)'
+            }}
+          >
+            {rarity.toUpperCase()}
+          </span>
         </div>
 
-        {/* Middle content */}
-        <div className="text-center space-y-6">
-          <div>
-            <p className="text-2xl font-light opacity-90">Estimated Age</p>
-            <p className="text-6xl font-bold leading-none">{result.age}</p>
-          </div>
-
-          <div className="space-y-3">
-            <p className="font-serif-display text-4xl leading-tight px-4 overflow-hidden" style={{
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                maxHeight: '3.5rem'
-              }}>{result.vibeTag}</p>
-            <div className="flex justify-center">
-              <p className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-sm font-bold rounded-full">
-                {rarity}
-              </p>
-            </div>
-          </div>
-
+        {/* 中间内容 */}
+        <div className="text-left">
+          <p
+            className="font-serif-display text-5xl leading-tight"
+            style={{
+              textShadow: '0 0 12px rgba(255, 193, 7, 0.6)'
+            }}
+          >
+            {result.vibeTag}
+          </p>
           {result.description && (
-            <p className="text-xs leading-relaxed max-w-[280px] mx-auto line-clamp-4 px-4 text-white drop-shadow-lg">{result.description}</p>
+            <p className="mt-3 text-white/80 max-w-xs text-xs leading-relaxed line-clamp-4">
+              {result.description}
+            </p>
           )}
         </div>
 
-        {/* Bottom content */}
-        <div className="text-center">
-          <p className="text-lg font-bold opacity-70">howolddoilook.art</p>
+        {/* 底部信息 */}
+        <div className="flex justify-between items-end text-white">
+          <div className="text-left">
+            <p className="text-xs opacity-70">Estimated Age</p>
+            <p className="text-3xl font-bold leading-none">{result.age}</p>
+          </div>
+          <p className="text-sm font-bold opacity-50">howolddoilook.art</p>
         </div>
       </div>
     </div>
