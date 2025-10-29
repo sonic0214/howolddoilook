@@ -49,18 +49,72 @@ export default function AnalysisResultComponent({
   };
 
   const shareToTwitter = async () => {
-    const text = `I look ${result.age} years old according to AI! Find out if you look younger or older:`;
-    const url = 'https://howolddoilook.art/';
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-    window.open(twitterUrl, '_blank', 'width=550,height=420');
-    setShowShareMenu(false);
+    try {
+      // 生成卡片图片
+      const blob = await generateImageBlob();
+      if (blob) {
+        // 将blob转换为base64
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          // 上传图片到免费的图片托管服务或使用data URL
+          const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨`;
+          const url = 'https://howolddoilook.art/';
+
+          // 尝试分享图片（Twitter不支持直接分享图片，需要先上传）
+          const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+          window.open(twitterUrl, '_blank', 'width=550,height=420');
+
+          setShowShareMenu(false);
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // 如果图片生成失败，使用原有逻辑
+        const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨`;
+        const url = 'https://howolddoilook.art/';
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(twitterUrl, '_blank', 'width=550,height=420');
+        setShowShareMenu(false);
+      }
+    } catch (error) {
+      console.error('Share error:', error);
+      setShowShareMenu(false);
+    }
   };
 
   const shareToFacebook = async () => {
-    const url = 'https://howolddoilook.art/';
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    window.open(facebookUrl, '_blank', 'width=550,height=420');
-    setShowShareMenu(false);
+    try {
+      // 生成卡片图片
+      const blob = await generateImageBlob();
+      if (blob) {
+        // 将blob转换为base64
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          // 创建一个临时的下载链接让用户保存图片
+          const imageUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = 'my-age-result.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(imageUrl);
+
+          // 提示用户手动分享图片
+          alert('卡片图片已下载！请将图片上传到Facebook并分享 📸');
+          setShowShareMenu(false);
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // 如果图片生成失败，使用原有逻辑
+        const url = 'https://howolddoilook.art/';
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+        window.open(facebookUrl, '_blank', 'width=550,height=420');
+        setShowShareMenu(false);
+      }
+    } catch (error) {
+      console.error('Share error:', error);
+      setShowShareMenu(false);
+    }
   };
 
   const shareToLinkedIn = async () => {
@@ -71,10 +125,42 @@ export default function AnalysisResultComponent({
   };
 
   const shareToWhatsApp = async () => {
-    const text = `I look ${result.age} years old according to AI! Try it yourself: https://howolddoilook.art/`;
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
-    setShowShareMenu(false);
+    try {
+      // 生成卡片图片
+      const blob = await generateImageBlob();
+      if (blob) {
+        // 将blob转换为base64
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          // 创建一个临时的下载链接让用户保存图片
+          const imageUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = 'my-age-result.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(imageUrl);
+
+          // 提示用户手动发送图片
+          const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨ Try it yourself: https://howolddoilook.art/\n\n(请分享刚刚下载的卡片图片 📸)`;
+          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+          window.open(whatsappUrl, '_blank');
+
+          setShowShareMenu(false);
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // 如果图片生成失败，使用原有逻辑
+        const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨ Try it yourself: https://howolddoilook.art/`;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank');
+        setShowShareMenu(false);
+      }
+    } catch (error) {
+      console.error('Share error:', error);
+      setShowShareMenu(false);
+    }
   };
 
   const downloadImage = async () => {
@@ -110,134 +196,286 @@ export default function AnalysisResultComponent({
     setShowShareMenu(false);
   };
 
-  return (
-    <div>
-      {/* Result Card - This will be captured */}
-      <div
-        ref={resultRef}
-        data-result-card
-        className="text-left rounded-2xl shadow-2xl overflow-hidden bg-gradient-to-br from-white via-orange-50 to-amber-50"
-        style={{
-          border: '2px solid #FED7AA'
-        }}
-      >
-        <div className="md:flex">
-          <div className="md:flex-shrink-0">
-            <img
-              className="h-48 w-full object-cover md:w-48"
-              src={uploadedImage}
-              alt="Your photo"
-              style={{ filter: 'brightness(1.05) contrast(1.02)' }}
-            />
-          </div>
-          <div className="p-8 bg-white/60 backdrop-blur-sm">
-            <div
-              className="inline-block uppercase tracking-wide text-sm font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"
+  // Determine card type and render accordingly
+  const cardType = result.cardType || 'classic';
+  const rarity = result.rarity || 'Classic';
+
+  const renderClassicCard = () => (
+    <div
+      ref={resultRef}
+      data-result-card
+      className="bg-white shadow-2xl rounded-xl flex overflow-hidden"
+      style={{
+        width: '850px',
+        height: '520px',
+        maxWidth: '100%'
+      }}
+    >
+      {/* Left side: User photo */}
+      <div className="w-1/2 bg-gray-50">
+        <img
+          src={uploadedImage}
+          className="w-full h-full object-contain p-3"
+          alt="User selfie for age analysis"
+          style={{ filter: 'brightness(1.05) contrast(1.02)' }}
+        />
+      </div>
+
+      {/* Right side: Analysis results */}
+      <div className="w-1/2 p-10 flex flex-col justify-between">
+        <div>
+          <p className="text-sm font-bold tracking-widest text-terracotta uppercase">YOUR ANALYSIS</p>
+          <p className="mt-3 text-base text-gray-500">Estimated Age</p>
+          <p className="text-6xl font-bold text-brand-dark leading-none">{result.age}</p>
+        </div>
+
+        <div className="mt-6">
+          <div className="border-t border-gray-200 pt-5">
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-sm font-bold text-terracotta">✨ Your Vibe</p>
+              <p className="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full">
+                {rarity}
+              </p>
+            </div>
+            <p
+              className="font-serif-display text-3xl text-brand-dark mt-2 leading-tight break-words"
+              style={{
+                wordBreak: 'break-word',
+                hyphens: 'auto',
+                lineHeight: '1.2'
+              }}
             >
-              YOUR AGE ANALYSIS
-            </div>
-            <div className="mt-3">
-              <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
-              <div
-                className="text-3xl font-bold text-gray-900"
-              >
-                {result.age} years
-              </div>
-            </div>
-            <div className="mt-4 bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-lg border-2 border-orange-200">
-              <div className="text-sm font-semibold text-orange-600 mb-1">✨ Your Vibe</div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
-                {result.vibeTag}
-              </div>
-            </div>
-              {/* Watermark */}
-            <div
-              className="mt-6 text-xs font-medium text-orange-400"
-            >
-              howolddoilook.art
-            </div>
+              {result.vibeTag}
+            </p>
+            {result.description && (
+              <p className="mt-3 text-gray-600 text-sm leading-relaxed line-clamp-3">{result.description}</p>
+            )}
           </div>
         </div>
+
+        <div className="mt-auto pt-8">
+          <p className="text-lg font-bold text-brand-dark opacity-50">howolddoilook.art</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderStoryCard = () => (
+    <div
+      ref={resultRef}
+      data-result-card
+      className="bg-white shadow-2xl rounded-xl flex flex-col overflow-hidden"
+      style={{
+        width: '420px',
+        height: '750px',
+        maxWidth: '100%'
+      }}
+    >
+      {/* Top: Photo */}
+      <div className="h-3/5 bg-gray-50">
+        <img
+          src={uploadedImage}
+          className="w-full h-full object-contain p-4"
+          alt="User selfie for age analysis"
+          style={{ filter: 'brightness(1.05) contrast(1.02)' }}
+        />
+      </div>
+
+      {/* Bottom: Analysis results */}
+      <div className="h-2/5 p-8 flex flex-col justify-between">
+        <div>
+          <div className="flex justify-between items-start gap-2">
+            <p
+              className="font-serif-display text-2xl text-brand-dark leading-tight flex-1 pr-2"
+              style={{
+                wordBreak: 'break-word',
+                hyphens: 'auto',
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}
+            >
+              {result.vibeTag}
+            </p>
+            <p className="px-2 py-1 bg-terracotta text-white text-xs font-bold rounded-full whitespace-nowrap flex-shrink-0">
+              {rarity}
+            </p>
+          </div>
+          {result.description && (
+            <p className="mt-3 text-gray-700 text-xs leading-relaxed line-clamp-4">{result.description}</p>
+          )}
+        </div>
+
+        <div className="flex justify-between items-end text-brand-dark">
+          <div className="text-left">
+            <p className="text-sm text-gray-500">Estimated Age</p>
+            <p className="text-4xl font-bold leading-none">{result.age}</p>
+          </div>
+          <p className="text-lg font-bold opacity-50">howolddoilook.art</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderEpicCard = () => (
+    <div
+      ref={resultRef}
+      data-result-card
+      className="relative shadow-2xl rounded-xl overflow-hidden"
+      style={{
+        width: '420px',
+        height: '600px',
+        maxWidth: '100%'
+      }}
+    >
+      {/* 背景图片 - 使用object-contain避免截取 */}
+      <div className="absolute inset-0 bg-gray-900">
+        <img
+          src={uploadedImage}
+          className="absolute inset-0 w-full h-full object-contain p-4"
+          alt="User selfie for age analysis"
+        />
+        {/* 渐变蒙层 - 更浅的背景 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent"></div>
+      </div>
+
+      {/* 内容 */}
+      <div className="relative z-10 p-8 flex flex-col justify-between h-full text-white">
+        {/* 右上角标签 */}
+        <div className="text-right">
+          <span
+            className="px-3 py-1 bg-yellow-400 text-gray-900 text-xs font-bold rounded-full tracking-widest"
+            style={{
+              boxShadow: '0 0 12px rgba(255, 193, 7, 0.6)',
+              textShadow: '0 0 12px rgba(255, 193, 7, 0.6)'
+            }}
+          >
+            {rarity.toUpperCase()}
+          </span>
+        </div>
+
+        {/* 中间内容 */}
+        <div className="text-left flex-1 flex flex-col justify-center">
+          <p
+            className="font-serif-display text-4xl leading-tight mb-4"
+            style={{
+              textShadow: '0 0 15px rgba(255, 193, 7, 0.8)',
+              wordBreak: 'break-word',
+              hyphens: 'auto',
+              lineHeight: '1.1'
+            }}
+          >
+            {result.vibeTag}
+          </p>
+          {result.description && (
+            <p className="text-white/90 max-w-xs text-xs leading-relaxed line-clamp-5">
+              {result.description}
+            </p>
+          )}
+        </div>
+
+        {/* 底部信息 */}
+        <div className="flex justify-between items-end text-white">
+          <div className="text-left">
+            <p className="text-xs opacity-70">Estimated Age</p>
+            <p className="text-3xl font-bold leading-none">{result.age}</p>
+          </div>
+          <p className="text-sm font-bold opacity-50">howolddoilook.art</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="max-w-4xl mx-auto flex flex-col items-center px-4">
+      {/* Result Card - This will be captured */}
+      <div className="inline-block w-full max-w-fit">
+        {cardType === 'epic' && renderEpicCard()}
+        {cardType === 'story' && renderStoryCard()}
+        {cardType === 'classic' && renderClassicCard()}
       </div>
 
       {/* Action Buttons */}
-      <div className="mt-6 relative">
+      <div className="mt-8 relative w-full max-w-lg sm:max-w-md">
         {/* Share Menu */}
         {showShareMenu && (
-          <div className="absolute bottom-full mb-2 left-0 right-0 bg-white border-2 border-terracotta rounded-lg shadow-xl p-4 z-10">
-            <div className="flex justify-between items-center mb-3">
+          <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-white border-2 border-terracotta rounded-lg shadow-xl p-4 z-10 w-full max-w-sm">
+            <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg" style={{ color: '#1F2937' }}>Share Your Result</h3>
               <button
                 onClick={() => setShowShareMenu(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 transition-colors"
+                aria-label="Close"
               >
-                <i className="fa-solid fa-times text-xl"></i>
+                <span style={{ fontSize: '1.2rem' }}>✕</span>
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex items-center justify-center gap-4">
               {/* Twitter */}
               <button
                 onClick={shareToTwitter}
-                className="flex items-center gap-2 p-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-blue-400 text-white rounded-full hover:bg-blue-500 hover:scale-110 transition-all shadow-md text-lg font-bold"
+                aria-label="Share on Twitter"
+                title="Share on Twitter"
               >
-                <i className="fa-brands fa-twitter text-xl"></i>
-                <span className="font-semibold">Twitter</span>
+                𝕏
               </button>
 
               {/* Facebook */}
               <button
                 onClick={shareToFacebook}
-                className="flex items-center gap-2 p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 hover:scale-110 transition-all shadow-md text-xl font-bold"
+                aria-label="Share on Facebook"
+                title="Share on Facebook"
               >
-                <i className="fa-brands fa-facebook text-xl"></i>
-                <span className="font-semibold">Facebook</span>
+                f
               </button>
 
               {/* WhatsApp */}
               <button
                 onClick={shareToWhatsApp}
-                className="flex items-center gap-2 p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-green-500 text-white rounded-full hover:bg-green-600 hover:scale-110 transition-all shadow-md text-xl"
+                aria-label="Share on WhatsApp"
+                title="Share on WhatsApp"
               >
-                <i className="fa-brands fa-whatsapp text-xl"></i>
-                <span className="font-semibold">WhatsApp</span>
+                💬
               </button>
 
               {/* LinkedIn */}
               <button
                 onClick={shareToLinkedIn}
-                className="flex items-center gap-2 p-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 hover:scale-110 transition-all shadow-md text-lg font-bold"
+                aria-label="Share on LinkedIn"
+                title="Share on LinkedIn"
               >
-                <i className="fa-brands fa-linkedin text-xl"></i>
-                <span className="font-semibold">LinkedIn</span>
+                in
               </button>
 
               {/* Download Image */}
               <button
                 onClick={downloadImage}
                 disabled={isGenerating}
-                className="flex items-center gap-2 p-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+                className="w-12 h-12 flex items-center justify-center bg-purple-600 text-white rounded-full hover:bg-purple-700 hover:scale-110 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 text-xl"
+                aria-label="Download Image"
+                title="Download Image"
               >
                 {isGenerating ? (
-                  <>
-                    <i className="fa-solid fa-spinner fa-spin text-xl"></i>
-                    <span className="font-semibold">Generating...</span>
-                  </>
+                  <span className="animate-spin">⏳</span>
                 ) : (
-                  <>
-                    <i className="fa-solid fa-download text-xl"></i>
-                    <span className="font-semibold">Download</span>
-                  </>
+                  '⬇️'
                 )}
               </button>
 
               {/* Copy Link */}
               <button
                 onClick={copyLink}
-                className="flex items-center gap-2 p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-gray-600 text-white rounded-full hover:bg-gray-700 hover:scale-110 transition-all shadow-md text-xl"
+                aria-label="Copy Link"
+                title="Copy Link"
               >
-                <i className="fa-solid fa-link text-xl"></i>
-                <span className="font-semibold">Copy Link</span>
+                🔗
               </button>
             </div>
           </div>
@@ -249,7 +487,7 @@ export default function AnalysisResultComponent({
             onClick={() => setShowShareMenu(!showShareMenu)}
             className="bg-terracotta text-white py-3 px-4 font-bold hover:bg-amber-700 transition-colors rounded-md flex items-center justify-center gap-2"
           >
-            <i className="fa-solid fa-share-nodes"></i>
+            <span className="icon-share" style={{ fontSize: '1.2rem' }}>🔗</span>
             Share Result
           </button>
 
@@ -257,7 +495,7 @@ export default function AnalysisResultComponent({
             onClick={onTryAgain}
             className="bg-brand-dark text-white py-3 px-4 font-bold hover:bg-gray-700 transition-colors rounded-md flex items-center justify-center gap-2"
           >
-            <i className="fa-solid fa-rotate-right"></i>
+            <span className="icon-refresh" style={{ fontSize: '1.2rem' }}>🔄</span>
             Try Again
           </button>
         </div>
