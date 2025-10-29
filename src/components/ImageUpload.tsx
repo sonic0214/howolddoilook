@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import imageCompression from 'browser-image-compression';
 import { AppState, AnalysisResult, ApiResponse } from '../types';
-import { generateVibeTagLegacy, AmazonRekognitionData } from '../utils/vibeGenerator';
+import { generateVibeTagLegacy } from '../utils/vibeGenerator';
 import { runVibeGeneratorTests } from '../utils/testVibeGenerator';
 import axios from 'axios';
 
@@ -113,7 +113,7 @@ export default function ImageUpload({
           const mockGender = Math.random() > 0.5 ? 'Male' : 'Female';
 
           // Create mock face analysis data
-          const mockFaceData: FaceAnalysisData = {
+          const mockFaceData: any = {
             age: mockAge,
             gender: mockGender,
             smile: Math.random() * 0.5 + 0.3, // 0.3-0.8 range

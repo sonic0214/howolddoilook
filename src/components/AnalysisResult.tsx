@@ -56,8 +56,6 @@ export default function AnalysisResultComponent({
         // 将blob转换为base64
         const reader = new FileReader();
         reader.onloadend = async () => {
-          const base64data = reader.result as string;
-
           // 上传图片到免费的图片托管服务或使用data URL
           const text = `I look ${result.age} years old according to AI! My vibe: ${result.vibeTag} ✨`;
           const url = 'https://howolddoilook.art/';
@@ -91,8 +89,6 @@ export default function AnalysisResultComponent({
         // 将blob转换为base64
         const reader = new FileReader();
         reader.onloadend = async () => {
-          const base64data = reader.result as string;
-
           // 创建一个临时的下载链接让用户保存图片
           const imageUrl = URL.createObjectURL(blob);
           const link = document.createElement('a');
@@ -136,8 +132,6 @@ export default function AnalysisResultComponent({
         // 将blob转换为base64
         const reader = new FileReader();
         reader.onloadend = async () => {
-          const base64data = reader.result as string;
-
           // 创建一个临时的下载链接让用户保存图片
           const imageUrl = URL.createObjectURL(blob);
           const link = document.createElement('a');
