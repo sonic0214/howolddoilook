@@ -145,18 +145,12 @@ export default function AnalysisResultComponent({
               </div>
             </div>
             <div className="mt-4 bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-lg border-2 border-orange-200">
-              <div className="text-sm font-semibold text-orange-600 mb-1">Your Appearance Type</div>
+              <div className="text-sm font-semibold text-orange-600 mb-1">✨ Your Vibe</div>
               <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                 {result.vibeTag}
               </div>
             </div>
-            {result.gender && (
-              <div className="mt-3 inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">
-                <i className="fas fa-venus-mars mr-2 text-gray-500"></i>
-                {result.gender}
-              </div>
-            )}
-            {/* Watermark */}
+              {/* Watermark */}
             <div
               className="mt-6 text-xs font-medium text-orange-400"
             >

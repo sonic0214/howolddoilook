@@ -4,6 +4,7 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
+  "_buildTimestamp": "2025-10-29T04:06:00Z",
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -50,7 +51,33 @@
       ]
     },
     {
-      "source": "/:path*\\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2)",
+      "source": "/assets/(.*)\\.(css)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)\\.(js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/:path*\\.(png|jpg|jpeg|gif|ico|svg|woff|woff2)",
       "headers": [
         {
           "key": "Cache-Control",

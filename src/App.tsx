@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { useEffect, Suspense, lazy } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import useServiceWorker from './hooks/useServiceWorker';
 import LoadingSpinner from './components/LoadingSpinner';
 
@@ -8,6 +9,7 @@ const Home = lazy(() => import('./pages/Home'));
 const SkincareArticle = lazy(() => import('./pages/SkincareArticle'));
 const NutritionArticle = lazy(() => import('./pages/NutritionArticle'));
 const MindfulnessArticle = lazy(() => import('./pages/MindfulnessArticle'));
+const ArticlesPage = lazy(() => import('./pages/ArticlesPage'));
 
 function ScrollToTop() {
   const location = useLocation();
@@ -75,7 +77,8 @@ function App() {
   }, [isSupported, isRegistered]);
 
   return (
-    <Router>
+    <HelmetProvider>
+      <Router>
       <ScrollToTop />
       <Routes>
         <Route
@@ -110,8 +113,17 @@ function App() {
             </Suspense>
           }
         />
-      </Routes>
-    </Router>
+        <Route
+          path="/articles"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading articles..." />}>
+              <ArticlesPage />
+            </Suspense>
+          }
+        />
+        </Routes>
+      </Router>
+    </HelmetProvider>
   );
 }
 

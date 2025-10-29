@@ -6,10 +6,10 @@ export default function CaseStudies() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-serif-display text-4xl md:text-5xl font-bold">
-            Real Age Analysis Results
+            ✨ Real Age Analysis Results 🎂
           </h2>
           <p className="mt-4 text-lg text-gray-600">
-            See how others compare their perceived age to their actual age.
+            See how others compare their perceived age to their actual age 🌟
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
@@ -28,8 +28,8 @@ export default function CaseStudies() {
                 <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
                 <div className="text-2xl font-bold text-gray-900">24 years</div>
               </div>
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
-                <div className="text-sm font-semibold text-orange-600 mb-1">Appearance Type</div>
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg">
+                <div className="text-sm font-semibold text-orange-600 mb-1">✨ Your Vibe</div>
                 <div className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                   Adventurous Spirit
                 </div>
@@ -51,8 +51,8 @@ export default function CaseStudies() {
                 <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
                 <div className="text-2xl font-bold text-gray-900">35 years</div>
               </div>
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
-                <div className="text-sm font-semibold text-orange-600 mb-1">Appearance Type</div>
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg">
+                <div className="text-sm font-semibold text-orange-600 mb-1">✨ Your Vibe</div>
                 <div className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                   Poised Leader
                 </div>
@@ -74,8 +74,8 @@ export default function CaseStudies() {
                 <div className="text-sm text-gray-600 font-medium">Estimated Age</div>
                 <div className="text-2xl font-bold text-gray-900">29 years</div>
               </div>
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg border border-orange-200">
-                <div className="text-sm font-semibold text-orange-600 mb-1">Appearance Type</div>
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 rounded-lg">
+                <div className="text-sm font-semibold text-orange-600 mb-1">✨ Your Vibe</div>
                 <div className="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
                   Radiant Optimist
                 </div>
