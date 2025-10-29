@@ -12,6 +12,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
+          // Exclude node_modules path checks for local files
+          if (!id.includes('node_modules')) {
+            return undefined; // Let Vite handle local file chunks automatically
+          }
+
           // Core React libraries
           if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
             return 'vendor';
@@ -19,7 +24,7 @@ export default defineConfig({
 
           // Router
           if (id.includes('react-router')) {
-            return 'router';
+            return 'vendor';
           }
 
           // Image processing libraries
@@ -32,29 +37,13 @@ export default defineConfig({
             return 'http';
           }
 
-          // UI libraries and icons
-          if (id.includes('lucide-react')) {
-            return 'icons';
-          }
-
           // Canvas libraries
           if (id.includes('html2canvas')) {
             return 'canvas';
           }
 
-          // Article pages (each gets its own chunk)
-          if (id.includes('/pages/')) {
-            const pageName = id.split('/').pop()?.replace('.tsx', '').replace('.ts', '') || 'page';
-            return `page-${pageName}`;
-          }
-
-          // Components
-          if (id.includes('/components/')) {
-            return 'components';
-          }
-
-          // Default chunk for everything else
-          return 'utils';
+          // Everything else from node_modules
+          return 'vendor';
         },
       },
     },
