@@ -55,20 +55,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown'
     });
 
-    // 这里可以集成实际的 analytics 服务，例如：
-    // - Google Analytics 4
-    // - Mixpanel
-    // - Amplitude
-    // - 自建分析服务
+    // 集成 Google Analytics 4
+    try {
+      // 如果gtag函数存在（通过HTML全局脚本加载）
+      if (typeof gtag !== 'undefined') {
+        // 将自定义属性转换为GA4格式
+        const ga4Parameters: any = {};
 
-    // 示例：如果使用 GA4
-    // if (typeof gtag !== 'undefined') {
-    //   gtag('event', event.eventName, {
-    //     custom_parameters: event.properties,
-    //     session_id: event.sessionId,
-    //     page_location: event.url
-    //   });
-    // }
+        if (event.properties) {
+          // 添加自定义参数（最多25个）
+          Object.keys(event.properties).slice(0, 25).forEach((key, index) => {
+            ga4Parameters[`custom_parameter_${index + 1}`] = event.properties[key];
+          });
+        }
+
+        // 添加会话ID
+        if (event.sessionId) {
+          ga4Parameters.session_id = event.sessionId;
+        }
+
+        // 添加页面位置
+        if (event.url) {
+          ga4Parameters.page_location = event.url;
+        }
+
+        // 发送事件到GA4
+        gtag('event', event.eventName, ga4Parameters);
+
+        console.log('📊 GA4 Event Sent:', {
+          eventName: event.eventName,
+          parameters: ga4Parameters
+        });
+      } else {
+        console.warn('⚠️ Google Analytics gtag function not available');
+      }
+    } catch (error) {
+      console.error('❌ GA4 Integration Error:', error);
+    }
 
     return res.status(200).json({
       success: true,
