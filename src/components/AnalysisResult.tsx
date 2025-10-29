@@ -165,79 +165,81 @@ export default function AnalysisResultComponent({
         {/* Share Menu */}
         {showShareMenu && (
           <div className="absolute bottom-full mb-2 left-0 right-0 bg-white border-2 border-terracotta rounded-lg shadow-xl p-4 z-10">
-            <div className="flex justify-between items-center mb-3">
+            <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg" style={{ color: '#1F2937' }}>Share Your Result</h3>
               <button
                 onClick={() => setShowShareMenu(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 transition-colors"
+                aria-label="Close"
               >
                 <i className="fa-solid fa-times text-xl"></i>
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex items-center justify-center gap-4">
               {/* Twitter */}
               <button
                 onClick={shareToTwitter}
-                className="flex items-center gap-2 p-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-blue-400 text-white rounded-full hover:bg-blue-500 hover:scale-110 transition-all shadow-md"
+                aria-label="Share on Twitter"
+                title="Share on Twitter"
               >
                 <i className="fa-brands fa-twitter text-xl"></i>
-                <span className="font-semibold">Twitter</span>
               </button>
 
               {/* Facebook */}
               <button
                 onClick={shareToFacebook}
-                className="flex items-center gap-2 p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 hover:scale-110 transition-all shadow-md"
+                aria-label="Share on Facebook"
+                title="Share on Facebook"
               >
                 <i className="fa-brands fa-facebook text-xl"></i>
-                <span className="font-semibold">Facebook</span>
               </button>
 
               {/* WhatsApp */}
               <button
                 onClick={shareToWhatsApp}
-                className="flex items-center gap-2 p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-green-500 text-white rounded-full hover:bg-green-600 hover:scale-110 transition-all shadow-md"
+                aria-label="Share on WhatsApp"
+                title="Share on WhatsApp"
               >
                 <i className="fa-brands fa-whatsapp text-xl"></i>
-                <span className="font-semibold">WhatsApp</span>
               </button>
 
               {/* LinkedIn */}
               <button
                 onClick={shareToLinkedIn}
-                className="flex items-center gap-2 p-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-blue-700 text-white rounded-full hover:bg-blue-800 hover:scale-110 transition-all shadow-md"
+                aria-label="Share on LinkedIn"
+                title="Share on LinkedIn"
               >
                 <i className="fa-brands fa-linkedin text-xl"></i>
-                <span className="font-semibold">LinkedIn</span>
               </button>
 
               {/* Download Image */}
               <button
                 onClick={downloadImage}
                 disabled={isGenerating}
-                className="flex items-center gap-2 p-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+                className="w-12 h-12 flex items-center justify-center bg-purple-600 text-white rounded-full hover:bg-purple-700 hover:scale-110 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                aria-label="Download Image"
+                title="Download Image"
               >
                 {isGenerating ? (
-                  <>
-                    <i className="fa-solid fa-spinner fa-spin text-xl"></i>
-                    <span className="font-semibold">Generating...</span>
-                  </>
+                  <i className="fa-solid fa-spinner fa-spin text-xl"></i>
                 ) : (
-                  <>
-                    <i className="fa-solid fa-download text-xl"></i>
-                    <span className="font-semibold">Download</span>
-                  </>
+                  <i className="fa-solid fa-download text-xl"></i>
                 )}
               </button>
 
               {/* Copy Link */}
               <button
                 onClick={copyLink}
-                className="flex items-center gap-2 p-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="w-12 h-12 flex items-center justify-center bg-gray-600 text-white rounded-full hover:bg-gray-700 hover:scale-110 transition-all shadow-md"
+                aria-label="Copy Link"
+                title="Copy Link"
               >
                 <i className="fa-solid fa-link text-xl"></i>
-                <span className="font-semibold">Copy Link</span>
               </button>
             </div>
           </div>

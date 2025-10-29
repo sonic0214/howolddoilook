@@ -155,7 +155,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Extract age range (Rekognition returns a range like {Low: 25, High: 32})
     const ageRange = face.AgeRange;
-    const estimatedAge = ageRange ? Math.round((ageRange.Low! + ageRange.High!) / 2) : 30;
+    let estimatedAge = ageRange ? Math.round((ageRange.Low! + ageRange.High!) / 2) : 30;
+
+    // Apply youthful bias - make people look younger
+    // Reduce age by 10-20% with a minimum reduction of 2 years
+    const ageReduction = Math.max(2, Math.round(estimatedAge * 0.15));
+    estimatedAge = Math.max(18, estimatedAge - ageReduction); // Minimum age of 18
 
     // Extract gender
     const genderValue = face.Gender?.Value?.toLowerCase() || 'unknown';
