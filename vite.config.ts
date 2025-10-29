@@ -13,7 +13,7 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           // Core React libraries
-          if (id.includes('react') || id.includes('react-dom')) {
+          if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
             return 'vendor';
           }
 
