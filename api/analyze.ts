@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import formidable from 'formidable';
 import fs from 'fs';
 import { RekognitionClient, DetectFacesCommand } from '@aws-sdk/client-rekognition';
+import { generateVibeTagLegacy, adaptToAmazonFormat } from '../src/utils/vibeGenerator';
 
 export const config = {
   api: {
@@ -191,17 +192,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       emotions: emotionMap,
     };
 
-    // 7. Generate Vibe Tag
-    const vibeTag = generateVibeTag(faceData);
-    console.log('Generated Vibe Tag:', vibeTag);
+    // 7. Generate Vibe Tag using the same engine as frontend
+    const vibeResult = generateVibeTagLegacy(faceData);
+    console.log('Generated Vibe Result:', {
+      tag: vibeResult.tag,
+      rarity: vibeResult.rarity,
+      cardType: vibeResult.cardType,
+      description: vibeResult.description?.substring(0, 50) + '...'
+    });
 
-    // 8. Return success response
+    // 8. Return success response with complete data
     const result = {
       success: true,
       data: {
         age: faceData.age,
         gender: faceData.gender,
-        vibeTag,
+        vibeTag: vibeResult.tag,
+        cardType: vibeResult.cardType,
+        rarity: vibeResult.rarity,
+        description: vibeResult.description,
         attributes: {
           smile: faceData.smile,
           emotions: faceData.emotions,
@@ -316,114 +325,3 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 }
 
-/**
- * Generate an age-related appearance description based on age and emotional attributes
- */
-function generateVibeTag(attributes: FaceAttributes): string {
-  const age = attributes.age;
-  const smile = attributes.smile || 0;
-  const happiness = attributes.emotions?.happiness || 0;
-
-  // Define appearance descriptions organized by age group and mood
-  const appearanceTypes = {
-    young_happy: [
-      'Youthful Glow',
-      'Fresh-faced',
-      'Young Spirit',
-      'Bright-eyed',
-      'Radiant Youth',
-      'Fresh Appeal',
-    ],
-    young_calm: [
-      'Natural Beauty',
-      'Understated Charm',
-      'Serene Youth',
-      'Quiet Elegance',
-      'Natural Grace',
-      'Subtle Charm',
-    ],
-    young_neutral: [
-      'Modern Look',
-      'Fresh Style',
-      'Contemporary Vibe',
-      'Clean Appearance',
-      'Modern Appeal',
-      'Youthful Style',
-    ],
-    mid_happy: [
-      'Ageless Beauty',
-      'Timeless Appeal',
-      'Graceful Charm',
-      'Elegant Glow',
-      'Confident Presence',
-      'Polished Look',
-    ],
-    mid_calm: [
-      'Refined Beauty',
-      'Classic Style',
-      'Sophisticated Charm',
-      'Polished Presence',
-      'Understated Elegance',
-      'Graceful Appeal',
-    ],
-    mid_neutral: [
-      'Professional Look',
-      'Established Style',
-      'Mature Appearance',
-      'Distinguished Presence',
-      'Refined Style',
-      'Classic Look',
-    ],
-    mature_happy: [
-      'Wise Beauty',
-      'Eternal Youth',
-      'Timeless Charm',
-      'Graceful Wisdom',
-      'Golden Years',
-      'Ageless Spirit',
-    ],
-    mature_calm: [
-      'Noble Presence',
-      'Serene Wisdom',
-      'Graceful Authority',
-      'Peaceful Beauty',
-      'Elegant Age',
-      'Distinguished Charm',
-    ],
-    mature_neutral: [
-      'Respected Presence',
-      'Classic Beauty',
-      'Elegant Style',
-      'Timeless Appeal',
-      'Mature Charm',
-      'Graceful Look',
-    ],
-  };
-
-  // Determine age group
-  let ageGroup: 'young' | 'mid' | 'mature';
-  if (age < 30) {
-    ageGroup = 'young';
-  } else if (age < 50) {
-    ageGroup = 'mid';
-  } else {
-    ageGroup = 'mature';
-  }
-
-  // Determine mood group based on smile and happiness
-  let moodGroup: 'happy' | 'calm' | 'neutral';
-  if (smile > 0.7 || happiness > 0.6) {
-    moodGroup = 'happy';
-  } else if (smile > 0.3 || happiness > 0.3) {
-    moodGroup = 'calm';
-  } else {
-    moodGroup = 'neutral';
-  }
-
-  // Get the appropriate appearance type array
-  const key = `${ageGroup}_${moodGroup}` as keyof typeof appearanceTypes;
-  const options = appearanceTypes[key];
-
-  // Return a random appearance type from the array
-  return options[Math.floor(Math.random() * options.length)];
-}

@@ -22,22 +22,32 @@ const AGE_BRACKETS = [
   {
     name: 'Exploration', // 0-22
     range: [0, 22] as [number, number],
-    images: ['Dawn Chaser', 'Starlight Dreamer', 'New Horizon', 'Spark Seeker', 'Wild Comet', 'Morning Spirit']
+    images: ['Dawn Chaser', 'Starlight Dreamer', 'New Horizon', 'Spark Seeker', 'Wild Comet', 'Morning Spirit', 'Nova Pioneer', 'Cosmic Wanderer']
   },
   {
     name: 'Growth', // 23-29
     range: [23, 29] as [number, number],
-    images: ['Sunbeam Creator', 'Urban Maverick', 'Bloom Architect', 'Trailblazer', 'Flame Keeper', 'Rising Tide']
+    images: ['Sunbeam Creator', 'Urban Maverick', 'Bloom Architect', 'Trailblazer', 'Flame Keeper', 'Rising Tide', 'Emerald Phoenix', 'Quantum Jumper']
   },
   {
     name: 'Depth', // 30-38
     range: [30, 38] as [number, number],
-    images: ['Moonlit Storyteller', 'Harvest Curator', 'Deepwood Guardian', 'Artisan Soul', 'Autumn Sage', 'River Oracle']
+    images: ['Moonlit Storyteller', 'Harvest Curator', 'Deepwood Guardian', 'Artisan Soul', 'Autumn Sage', 'River Oracle', 'Crystal Weaver', 'Dream Shaper']
   },
   {
-    name: 'Wisdom', // 39+
-    range: [39, 100] as [number, number],
-    images: ['Starlight Sage', 'Oceanic Philosopher', 'Legacy Architect', 'The Collector', 'Cosmic Elder', 'Time Guardian']
+    name: 'Prime', // 39-50
+    range: [39, 50] as [number, number],
+    images: ['Starlight Sage', 'Oceanic Philosopher', 'Legacy Architect', 'The Collector', 'Cosmic Elder', 'Time Guardian', 'Wisdom Keeper', 'Soul Navigator']
+  },
+  {
+    name: 'Mastery', // 51-65
+    range: [51, 65] as [number, number],
+    images: ['Eternal Mentor', 'Chronicle Keeper', 'Ancient Scholar', 'Zen Master', 'Crystal Sage', 'Void Walker', 'Light Bearer', 'Star Weaver']
+  },
+  {
+    name: 'Transcendence', // 66+
+    range: [66, 100] as [number, number],
+    images: ['Cosmic Guardian', 'Time Traveler', 'Dimension Jumper', 'Infinity Sage', 'Celestial Being', 'Quantum Master', 'Universal Consciousness', 'Enlightened One']
   }
 ];
 
@@ -206,40 +216,91 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
     // 确定年龄段 (ageBracket)
     const ageBracket = AGE_BRACKETS.find(bracket =>
       data.age.mid >= bracket.range[0] && data.age.mid <= bracket.range[1]
-    ) || AGE_BRACKETS[3]; // 默认使用从容期
+    ) || AGE_BRACKETS[3]; // 默认使用智慧期
+
+    // 添加随机因子，增加结果的多样性和不可预测性
+    let randomSeed = Date.now() + Math.random() * 1000;
+    const originalRandom = Math.random;
+    Math.random = function() {
+      const x = Math.sin(randomSeed++) * 10000;
+      return x - Math.floor(x);
+    };
+
+    // 使用后恢复原始random函数
+    const restoreRandom = () => {
+      Math.random = originalRandom;
+    };
 
     // 确定气质修饰词 (vibeModifier) - 丰富的气质词库
     let vibeModifier: string;
 
     if (data.eyeglasses.value) {
       // 眼镜用户高优先级 - 智慧系列
-      const scholarlyModifiers = ['Scholarly', 'Focused', 'Analytical', 'Cerebral'];
+      const scholarlyModifiers = ['Scholarly', 'Focused', 'Analytical', 'Cerebral', 'Intellectual', 'Methodical', 'Contemplative', 'Philosophical'];
       vibeModifier = scholarlyModifiers[Math.floor(Math.random() * scholarlyModifiers.length)];
     } else if (data.primaryEmotion.type === 'HAPPY' && data.primaryEmotion.confidence > 70 || data.smile.value) {
       // 开心/微笑 - 活力系列
-      const happyModifiers = ['Radiant', 'Joyful', 'Luminous', 'Vibrant', 'Playful'];
+      const happyModifiers = ['Radiant', 'Joyful', 'Luminous', 'Vibrant', 'Playful', 'Bubbly', 'Exuberant', 'Effervescent', 'Sunny', 'Cheerful'];
       vibeModifier = happyModifiers[Math.floor(Math.random() * happyModifiers.length)];
     } else if (data.primaryEmotion.type === 'CALM' && data.primaryEmotion.confidence > 70) {
       // 冷静 - 宁静系列
-      const calmModifiers = ['Serene', 'Tranquil', 'Poised', 'Mindful', 'Grounded'];
+      const calmModifiers = ['Serene', 'Tranquil', 'Poised', 'Mindful', 'Grounded', 'Peaceful', 'Balanced', 'Centered', 'Zen', 'Harmonious'];
       vibeModifier = calmModifiers[Math.floor(Math.random() * calmModifiers.length)];
     } else if (data.primaryEmotion.type === 'SURPRISED') {
       // 惊讶 - 灵感系列
-      const surprisedModifiers = ['Curious', 'Inspired', 'Whimsical', 'Eclectic'];
+      const surprisedModifiers = ['Curious', 'Inspired', 'Whimsical', 'Eclectic', 'Adventurous', 'Inquisitive', 'Spontaneous', 'Wonder-filled', 'Magical', 'Creative'];
       vibeModifier = surprisedModifiers[Math.floor(Math.random() * surprisedModifiers.length)];
     } else if (data.primaryEmotion.type === 'SAD') {
       // 悲伤 - 深度系列（正面转化）
-      const sadModifiers = ['Soulful', 'Poetic', 'Introspective', 'Resonant'];
+      const sadModifiers = ['Soulful', 'Poetic', 'Introspective', 'Resonant', 'Melancholic', 'Reflective', 'Deep', 'Mystical', 'Pensive', 'Dreamy'];
       vibeModifier = sadModifiers[Math.floor(Math.random() * sadModifiers.length)];
+    } else if (data.primaryEmotion.type === 'ANGRY' && data.primaryEmotion.confidence > 60) {
+      // 愤怒 - 力量系列（正面转化）
+      const angryModifiers = ['Passionate', 'Fiery', 'Bold', 'Determined', 'Courageous', 'Intense', 'Powerful', 'Dynamic', 'Strong-willed', 'Fierce'];
+      vibeModifier = angryModifiers[Math.floor(Math.random() * angryModifiers.length)];
+    } else if (data.primaryEmotion.type === 'CONFUSED') {
+      // 困惑 - 探索系列
+      const confusedModifiers = ['Inquisitive', 'Explorative', 'Thoughtful', 'Searching', 'Curious', 'Investigative', 'Questing', 'Seeking', 'Wondering', 'Pondering'];
+      vibeModifier = confusedModifiers[Math.floor(Math.random() * confusedModifiers.length)];
     } else {
       // 默认 - 真实系列
-      const defaultModifiers = ['Authentic', 'Unique', 'Genuine'];
+      const defaultModifiers = ['Authentic', 'Unique', 'Genuine', 'Natural', 'Original', 'Pure', 'True', 'Real', 'Honest', 'Unfiltered'];
       vibeModifier = defaultModifiers[Math.floor(Math.random() * defaultModifiers.length)];
+    }
+
+    // 添加基于年龄和性别的额外修饰词，增加区分度
+    let additionalModifier = '';
+
+    // 基于性别的微调（20%概率）
+    if (Math.random() < 0.2 && data.gender.value !== 'UNKNOWN') {
+      if (data.gender.value === 'FEMALE') {
+        const feminineModifiers = ['Ethereal', 'Graceful', 'Elegant', 'Divine', 'Angelic', 'Celestial'];
+        additionalModifier = feminineModifiers[Math.floor(Math.random() * feminineModifiers.length)];
+      } else if (data.gender.value === 'MALE') {
+        const masculineModifiers = ['Majestic', 'Noble', 'Heroic', 'Regal', 'Stalwart', 'Valiant'];
+        additionalModifier = masculineModifiers[Math.floor(Math.random() * masculineModifiers.length)];
+      }
+    }
+
+    // 基于年龄段的特殊修饰词（15%概率）
+    if (Math.random() < 0.15) {
+      if (data.age.mid < 25) {
+        const youthfulModifiers = ['Youthful', 'Fresh', 'New', 'Emerging', 'Blooming'];
+        additionalModifier = additionalModifier ? `${additionalModifier} ${youthfulModifiers[Math.floor(Math.random() * youthfulModifiers.length)]}` : youthfulModifiers[Math.floor(Math.random() * youthfulModifiers.length)];
+      } else if (data.age.mid > 60) {
+        const wiseModifiers = ['Ancient', 'Eternal', 'Timeless', 'Wise', 'Venerable'];
+        additionalModifier = additionalModifier ? `${additionalModifier} ${wiseModifiers[Math.floor(Math.random() * wiseModifiers.length)]}` : wiseModifiers[Math.floor(Math.random() * wiseModifiers.length)];
+      }
     }
 
     // 组合生成最终标签
     const selectedImage = ageBracket.images[Math.floor(Math.random() * ageBracket.images.length)];
-    const finalTag = `${vibeModifier}${selectedImage}`;
+    let finalTag = vibeModifier + selectedImage;
+
+    // 如果有额外修饰词，添加到前面
+    if (additionalModifier) {
+      finalTag = additionalModifier + finalTag;
+    }
 
     // 生成魅力解读
     const description = generateDescription(vibeModifier, ageBracket.name, selectedImage);
@@ -247,7 +308,10 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
     // 根据随机概率决定稀有度（增加游戏化体验）
     const rarity = determineRandomRarity();
 
-    return {
+    // 恢复原始random函数
+  restoreRandom();
+
+  return {
       tag: finalTag,
       rarity,
       description,
