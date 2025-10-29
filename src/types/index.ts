@@ -20,6 +20,9 @@ export interface AnalysisResult {
   age: number;
   gender: string;
   vibeTag: string;
+  cardType?: 'classic' | 'story' | 'epic';
+  rarity?: 'Common' | 'Rare' | 'Epic' | 'Legendary';
+  description?: string;
   attributes?: Partial<FaceAttributes>;
 }
 

@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import imageCompression from 'browser-image-compression';
 import { AppState, AnalysisResult, ApiResponse } from '../types';
+import { generateVibeTagLegacy, AmazonRekognitionData } from '../utils/vibeGenerator';
+import { runVibeGeneratorTests } from '../utils/testVibeGenerator';
 import axios from 'axios';
 
 interface ImageUploadProps {
@@ -20,6 +22,13 @@ export default function ImageUpload({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
   const [statusMessage, setStatusMessage] = useState<string>('');
+
+  // 开发环境下的测试函数
+  const handleTestVibeGenerator = () => {
+    if (import.meta.env.DEV) {
+      runVibeGeneratorTests();
+    }
+  };
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -99,35 +108,56 @@ export default function ImageUpload({
           // Simulate API delay
           await new Promise(resolve => setTimeout(resolve, 2000));
 
-          // Generate mock response
+          // Generate intelligent mock response using the new vibe generator
           const mockAge = Math.floor(Math.random() * 20) + 25; // Random age 25-44
-          const mockVibeTags = [
-            'Radiant Optimist',
-            'Sunshine Spirit',
-            'Creative Soul',
-            'Golden Hour Glow',
-            'Poised Leader',
-            'Timeless Grace',
-            'Adventurous Spirit',
-            'Serene Wisdom',
-          ];
-          const mockVibeTag = mockVibeTags[Math.floor(Math.random() * mockVibeTags.length)];
+          const mockGender = Math.random() > 0.5 ? 'Male' : 'Female';
+
+          // Create mock face analysis data
+          const mockFaceData: FaceAnalysisData = {
+            age: mockAge,
+            gender: mockGender,
+            smile: Math.random() * 0.5 + 0.3, // 0.3-0.8 range
+            glasses: Math.random() > 0.7 ? 'ReadingGlasses' : 'None',
+            emotion: {
+              happiness: Math.random() * 0.8,
+              neutral: Math.random() * 0.6,
+              sadness: Math.random() * 0.2,
+              anger: Math.random() * 0.1,
+              contempt: Math.random() * 0.1,
+              disgust: Math.random() * 0.1,
+              fear: Math.random() * 0.1,
+              surprise: Math.random() * 0.4
+            }
+          };
+
+          // Generate intelligent vibe tag using the new engine
+          const vibeResult = generateVibeTagLegacy(mockFaceData);
+          const mockVibeTag = vibeResult.tag;
 
           response = {
             data: {
               success: true,
               data: {
                 age: mockAge,
-                gender: Math.random() > 0.5 ? 'male' : 'female',
+                gender: mockGender.toLowerCase(),
                 vibeTag: mockVibeTag,
+                cardType: vibeResult.cardType,
+                rarity: vibeResult.rarity,
+                description: vibeResult.description,
                 attributes: {
-                  smile: Math.random() * 0.5 + 0.3,
+                  smile: mockFaceData.smile,
+                  glasses: mockFaceData.glasses,
+                  emotion: mockFaceData.emotion,
                 },
               },
             },
           };
 
           console.log('📊 Mock analysis result:', response.data);
+          console.log('🎯 Vibe generation result:', vibeResult.tag);
+          console.log('⭐ Rarity:', vibeResult.rarity);
+          console.log('📝 Card Type:', vibeResult.cardType);
+          console.log('📄 Description:', vibeResult.description);
         } else {
           throw apiError;
         }
@@ -225,6 +255,17 @@ export default function ImageUpload({
       >
         Analyze My Photo
       </button>
+
+      {/* 开发环境测试按钮 */}
+      {import.meta.env.DEV && (
+        <button
+          onClick={handleTestVibeGenerator}
+          className="mt-3 w-full py-2 text-sm font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-md transition-colors"
+        >
+          🧪 Test Vibe Generator (Dev Only)
+        </button>
+      )}
+
       {!selectedFile && (
         <p id="upload-help" className="sr-only">
           Please upload a photo first before enabling the analysis button
