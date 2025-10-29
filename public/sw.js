@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lumin-ai-v2';
+const CACHE_NAME = 'lumin-ai-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -27,12 +27,34 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - prefer fresh HTML and keep static assets cached
 self.addEventListener('fetch', (event) => {
   const request = event.request;
 
-  // Skip cross-origin requests
-  if (!request.url.startsWith(self.location.origin)) {
+  // Always use network-first for navigations so HTML stays fresh
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseToCache);
+          });
+          return response;
+        })
+        .catch(async () => {
+          const cachedPage = await caches.match(request);
+          if (cachedPage) {
+            return cachedPage;
+          }
+          return caches.match('/') || caches.match('/index.html');
+        })
+    );
+    return;
+  }
+
+  // Ignore non-GET or cross-origin requests
+  if (request.method !== 'GET' || !request.url.startsWith(self.location.origin)) {
     return;
   }
 
@@ -41,44 +63,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Only handle GET requests
-  if (request.method !== 'GET') {
-    return;
-  }
-
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-
-        // Clone the request because it's a stream and can only be consumed once
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then(
-          (response) => {
-            // Check if valid response
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response because it's a stream
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
+    caches.match(request).then((cachedResponse) => {
+      const fetchPromise = fetch(request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseToCache);
+            });
           }
-        ).catch(() => {
-          // Return offline page if available
-          return caches.match('/');
-        });
-      })
+          return networkResponse;
+        })
+        .catch(() => cachedResponse);
+
+      return cachedResponse || fetchPromise;
+    })
   );
 });
 
@@ -93,6 +93,6 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
