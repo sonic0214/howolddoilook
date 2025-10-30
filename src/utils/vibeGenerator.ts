@@ -306,7 +306,7 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
     }
 
     // 生成魅力解读
-    const description = generateDescription(vibeModifier, ageBracket.name, selectedImage);
+    const description = generateDescription(vibeModifier, ageBracket.name);
 
     // 根据随机概率决定稀有度（增加游戏化体验）
     const rarity = determineRandomRarity();
@@ -335,7 +335,7 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
 }
 
 // 生成魅力解读 - 更简洁的版本
-function generateDescription(modifier: string, agePeriodName: string, imageName: string): string {
+function generateDescription(modifier: string, agePeriodName: string): string {
   const descriptions: { [key: string]: string } = {
     // 活力系列
     'Radiant': `Full of vitality, bringing energy to all around you.`,
