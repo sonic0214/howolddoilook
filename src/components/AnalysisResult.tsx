@@ -206,8 +206,8 @@ export default function AnalysisResultComponent({
       data-result-card
       className="bg-white shadow-2xl rounded-xl flex overflow-hidden"
       style={{
-        width: '850px',
-        height: '520px',
+        width: '900px',
+        height: '560px',
         maxWidth: '100%'
       }}
     >
@@ -222,7 +222,7 @@ export default function AnalysisResultComponent({
       </div>
 
       {/* Right side: Analysis results */}
-      <div className="w-1/2 p-10 flex flex-col justify-between">
+      <div className="w-1/2 p-12 flex flex-col justify-between">
         <div>
           <p className="text-sm font-bold tracking-widest text-terracotta uppercase">YOUR ANALYSIS</p>
           <p className="mt-3 text-base text-gray-500">Estimated Age</p>
@@ -242,13 +242,14 @@ export default function AnalysisResultComponent({
               style={{
                 wordBreak: 'break-word',
                 hyphens: 'auto',
-                lineHeight: '1.2'
+                lineHeight: '1.3',
+                maxWidth: '100%'
               }}
             >
               {result.vibeTag}
             </p>
             {result.description && (
-              <p className="mt-3 text-gray-600 text-sm leading-relaxed line-clamp-3">{result.description}</p>
+              <p className="mt-4 text-gray-600 text-sm leading-relaxed">{result.description}</p>
             )}
           </div>
         </div>
@@ -266,8 +267,8 @@ export default function AnalysisResultComponent({
       data-result-card
       className="bg-white shadow-2xl rounded-xl flex flex-col overflow-hidden"
       style={{
-        width: '420px',
-        height: '750px',
+        width: '450px',
+        height: '780px',
         maxWidth: '100%'
       }}
     >
@@ -284,26 +285,25 @@ export default function AnalysisResultComponent({
       {/* Bottom: Analysis results */}
       <div className="h-2/5 p-8 flex flex-col justify-between">
         <div>
-          <div className="flex justify-between items-start gap-2">
+          <div className="flex justify-between items-start gap-3">
             <p
               className="font-serif-display text-2xl text-brand-dark leading-tight flex-1 pr-2"
               style={{
                 wordBreak: 'break-word',
                 hyphens: 'auto',
-                display: '-webkit-box',
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: 'vertical',
+                lineHeight: '1.2',
+                maxHeight: '4.8em',
                 overflow: 'hidden'
               }}
             >
               {result.vibeTag}
             </p>
-            <p className="px-2 py-1 bg-terracotta text-white text-xs font-bold rounded-full whitespace-nowrap flex-shrink-0">
+            <p className="px-2.5 py-1 bg-terracotta text-white text-xs font-bold rounded-full whitespace-nowrap flex-shrink-0">
               {rarity}
             </p>
           </div>
           {result.description && (
-            <p className="mt-3 text-gray-700 text-xs leading-relaxed line-clamp-4">{result.description}</p>
+            <p className="mt-4 text-gray-700 text-xs leading-relaxed">{result.description}</p>
           )}
         </div>
 
@@ -324,8 +324,8 @@ export default function AnalysisResultComponent({
       data-result-card
       className="relative shadow-2xl rounded-xl overflow-hidden"
       style={{
-        width: '420px',
-        height: '600px',
+        width: '450px',
+        height: '650px',
         maxWidth: '100%'
       }}
     >
@@ -341,7 +341,7 @@ export default function AnalysisResultComponent({
       </div>
 
       {/* 内容 */}
-      <div className="relative z-10 p-8 flex flex-col justify-between h-full text-white">
+      <div className="relative z-10 p-10 flex flex-col justify-between h-full text-white">
         {/* 右上角标签 */}
         <div className="text-right">
           <span
@@ -358,18 +358,19 @@ export default function AnalysisResultComponent({
         {/* 中间内容 */}
         <div className="text-left flex-1 flex flex-col justify-center">
           <p
-            className="font-serif-display text-4xl leading-tight mb-4"
+            className="font-serif-display text-4xl leading-tight mb-5"
             style={{
               textShadow: '0 0 15px rgba(255, 193, 7, 0.8)',
               wordBreak: 'break-word',
               hyphens: 'auto',
-              lineHeight: '1.1'
+              lineHeight: '1.15',
+              maxWidth: '100%'
             }}
           >
             {result.vibeTag}
           </p>
           {result.description && (
-            <p className="text-white/90 max-w-xs text-xs leading-relaxed line-clamp-5">
+            <p className="text-white/90 text-sm leading-relaxed max-w-sm">
               {result.description}
             </p>
           )}
