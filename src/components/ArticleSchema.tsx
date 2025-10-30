@@ -6,6 +6,9 @@ interface ArticleSchemaProps {
   datePublished: string;
   dateModified?: string;
   imageUrl?: string;
+  imageCreator?: string;
+  imageCreditText?: string;
+  imageCopyrightNotice?: string;
   url: string;
 }
 
@@ -17,6 +20,9 @@ export default function ArticleSchema({
   datePublished,
   dateModified = datePublished,
   imageUrl,
+  imageCreator = "Pexels",
+  imageCreditText = "Photo provided by Pexels",
+  imageCopyrightNotice = "© Pexels. Licensed under Pexels License.",
   url
 }: ArticleSchemaProps) {
   const schema = {
@@ -49,7 +55,13 @@ export default function ArticleSchema({
         "@type": "ImageObject",
         "url": imageUrl,
         "width": 1200,
-        "height": 630
+        "height": 630,
+        "creator": {
+          "@type": "Organization",
+          "name": imageCreator
+        },
+        "creditText": imageCreditText,
+        "copyrightNotice": imageCopyrightNotice
       }
     }),
     "articleSection": "Beauty & Wellness",

@@ -15,6 +15,9 @@ export default function SkincareArticle() {
         author="Lumin AI"
         datePublished="2025-10-28"
         imageUrl="https://howolddoilook.art/og-image.jpg"
+        imageCreator="Lumin AI"
+        imageCreditText="Image created by Lumin AI"
+        imageCopyrightNotice="© 2025 Lumin AI. All rights reserved."
         url="https://howolddoilook.art/articles/skincare-secrets"
       />
       <Navbar />
