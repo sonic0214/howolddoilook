@@ -55,43 +55,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown'
     });
 
-    // 集成 Google Analytics 4
-    try {
-      // 如果gtag函数存在（通过HTML全局脚本加载）
-      if (typeof gtag !== 'undefined') {
-        // 将自定义属性转换为GA4格式
-        const ga4Parameters: any = {};
-
-        if (event.properties) {
-          // 添加自定义参数（最多25个）
-          Object.keys(event.properties).slice(0, 25).forEach((key, index) => {
-            ga4Parameters[`custom_parameter_${index + 1}`] = event.properties[key];
-          });
-        }
-
-        // 添加会话ID
-        if (event.sessionId) {
-          ga4Parameters.session_id = event.sessionId;
-        }
-
-        // 添加页面位置
-        if (event.url) {
-          ga4Parameters.page_location = event.url;
-        }
-
-        // 发送事件到GA4
-        gtag('event', event.eventName, ga4Parameters);
-
-        console.log('📊 GA4 Event Sent:', {
-          eventName: event.eventName,
-          parameters: ga4Parameters
-        });
-      } else {
-        console.warn('⚠️ Google Analytics gtag function not available');
-      }
-    } catch (error) {
-      console.error('❌ GA4 Integration Error:', error);
-    }
+    // Google Analytics 4 数据收集
+    // 注意：服务器端无法直接发送到GA4，数据收集由前端处理
+    // 这里我们只记录和分析数据，用于服务器端分析和潜在的未来集成
+    console.log('📊 Analytics Data Collected:', {
+      eventType: event.eventName,
+      sessionId: event.sessionId,
+      timestamp: new Date().toISOString(),
+      // 记录关键数据用于服务器端分析
+      analysisSuccess: event.properties?.success,
+      analysisDuration: event.properties?.duration,
+      deviceType: event.properties?.deviceType,
+      browser: event.properties?.browser
+    });
 
     return res.status(200).json({
       success: true,
