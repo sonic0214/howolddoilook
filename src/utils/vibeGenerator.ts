@@ -54,63 +54,63 @@ const AGE_BRACKETS = [
 // 2.2 特殊"彩蛋"标签库 (SPECIAL_TAGS) - 最高优先级标签
 const SPECIAL_TAGS = [
   {
-    name: 'Main Character Energy',
+    name: 'MainCharacterEnergy',
     rarity: 'Epic' as const,
-    description: 'You radiate an undeniable presence, as if the entire universe has scripted this moment just for you. Your confidence and charisma light up every room you enter.',
+    description: 'Undeniable presence lighting up every room. Confidence and charisma that captivates.',
     condition: (data: ProcessedApiData) => data.smile.value && data.emotions.happy > 99
   },
   {
-    name: 'Unfiltered Sunshine',
+    name: 'UnfilteredSunshine',
     rarity: 'Epic' as const,
-    description: 'Your authentic radiance beams like pure sunlight, unfiltered and absolutely magnetic. People are naturally drawn to your genuine warmth and infectious energy.',
+    description: 'Authentic radiance absolutely magnetic. Genuine warmth drawing everyone close.',
     condition: (data: ProcessedApiData) => data.smile.confidence > 99 && data.emotions.happy > 99
   },
   {
-    name: 'The Oracle',
+    name: 'TheOracle',
     rarity: 'Rare' as const,
-    description: 'Your eyes hold ancient wisdom, as if you can see beyond the veil of ordinary reality. Your insights pierce through complexity with startling clarity.',
+    description: 'Ancient wisdom seeing beyond ordinary reality. Insights piercing through complexity.',
     condition: (data: ProcessedApiData) => data.age.high > 28 && data.emotions.calm > 90 && data.eyeglasses.value
   },
   {
-    name: 'Effortless Glow',
+    name: 'EffortlessGlow',
     rarity: 'Rare' as const,
-    description: 'Your beauty flows with natural ease, like sunlight dancing on water. There\'s an innate radiance about you that requires no effort to captivate.',
+    description: 'Natural beauty flowing with ease. Innate radiance captivating without effort.',
     condition: (data: ProcessedApiData) => data.age.low < 25 && (data.emotions.happy > 95 || data.smile.value)
   },
   {
-    name: 'Midnight Dreamer',
+    name: 'MidnightDreamer',
     rarity: 'Rare' as const,
-    description: 'You possess a poetic soul that finds beauty in shadows and depth in silence. Your introspective nature holds stories that the midnight sky would envy.',
+    description: 'Poetic soul finding beauty in shadows. Introspective depth holding precious stories.',
     condition: (data: ProcessedApiData) => data.emotions.sad > 70
   },
   {
-    name: 'The Analyst',
+    name: 'TheAnalyst',
     rarity: 'Rare' as const,
-    description: 'Your mind operates with laser-like precision, dissecting complexity with intellectual elegance. Behind those glasses lies a brain that processes the world in fascinating dimensions.',
+    description: 'Mind operating with laser precision. Intellect processing the world uniquely.',
     condition: (data: ProcessedApiData) => data.eyeglasses.value && data.emotions.calm > 80
   },
   {
-    name: 'Untamed Spirit',
+    name: 'UntamedSpirit',
     rarity: 'Rare' as const,
-    description: 'Wild curiosity and boundless energy dance in your eyes. You\'re a force of nature that cannot be contained, always seeking the next horizon with fearless enthusiasm.',
+    description: 'Wild curiosity dancing in your eyes. Force of nature seeking horizons fearlessly.',
     condition: (data: ProcessedApiData) => data.age.low < 25 && (data.emotions.surprised > 80 || data.emotions.happy > 80)
   },
   {
-    name: 'Poised Leader',
+    name: 'PoisedLeader',
     rarity: 'Rare' as const,
-    description: 'Grace and strength emanate from you in perfect balance. Your quiet confidence commands respect without demanding it, leading with wisdom rather than authority.',
+    description: 'Grace and strength in perfect balance. Quiet confidence commanding respect naturally.',
     condition: (data: ProcessedApiData) => data.age.high > 28 && data.emotions.calm > 80 && data.gender.value === 'FEMALE'
   },
   {
-    name: 'The Visionary',
+    name: 'TheVisionary',
     rarity: 'Rare' as const,
-    description: 'You see possibilities that others miss, painting the future with strokes of innovation. Your mind operates on a different frequency, where ideas become reality.',
+    description: 'Seeing possibilities others miss. Mind painting the future with innovation.',
     condition: (data: ProcessedApiData) => data.age.high > 28 && data.emotions.calm > 80 && data.gender.value === 'MALE'
   },
   {
-    name: 'Cosmic Wanderer',
+    name: 'CosmicWanderer',
     rarity: 'Epic' as const,
-    description: 'You transcend conventional definitions, existing in a realm all your own. Like a star that refuses to be categorized, you illuminate the mysteries of being unbound.',
+    description: 'Transcending definitions, existing uniquely. Illuminating mysteries of being unbound.',
     condition: (data: ProcessedApiData) => (data.age.high - data.age.low) > 10 // Very wide age range suggests "undefinable"
   }
 ];
@@ -293,13 +293,16 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
       }
     }
 
-    // 组合生成最终标签
-    const selectedImage = ageBracket.images[Math.floor(Math.random() * ageBracket.images.length)];
-    let finalTag = vibeModifier + selectedImage;
+    // 组合生成最终标签 - 移除所有空格使其更紧凑
+    const selectedImage = ageBracket.images[Math.floor(Math.random() * ageBracket.images.length)].replace(/\s+/g, '');
+    const cleanModifier = vibeModifier.replace(/\s+/g, '');
+    const cleanAdditionalModifier = additionalModifier.replace(/\s+/g, '');
+
+    let finalTag = cleanModifier + selectedImage;
 
     // 如果有额外修饰词，添加到前面
-    if (additionalModifier) {
-      finalTag = additionalModifier + finalTag;
+    if (cleanAdditionalModifier) {
+      finalTag = cleanAdditionalModifier + finalTag;
     }
 
     // 生成魅力解读
@@ -323,56 +326,125 @@ export function generateVibeTag(apiData: AmazonRekognitionData): VibeGenerationR
 
     // 第三步：设定默认/备用方案 (Fallback)
     return {
-      tag: 'Unique You',
+      tag: 'UniqueYou',
       rarity: 'Classic',
-      description: 'Every version of you is a limited edition in the universe, no definition needed, naturally radiant.',
+      description: 'Limited edition in the universe, naturally radiant.',
       cardType: 'classic'
     };
   }
 }
 
-// 生成魅力解读 - 支持丰富的修饰词
+// 生成魅力解读 - 更简洁的版本
 function generateDescription(modifier: string, agePeriodName: string, imageName: string): string {
   const descriptions: { [key: string]: string } = {
     // 活力系列
-    'Radiant': `You are full of vitality, like the sunshine of the ${agePeriodName}, always bringing energy and inspiration to those around you.`,
-    'Joyful': `Your spirit radiates pure joy, like the vibrant energy of the ${agePeriodName}, naturally uplifting everyone in your presence.`,
-    'Luminous': `You glow from within, like the dawn light of the ${agePeriodName}, illuminating paths others might not see.`,
-    'Vibrant': `Your energy is infectious and dynamic, like the pulsing life force of the ${agePeriodName}, impossible to ignore.`,
-    'Playful': `You possess a delightful playfulness, like the spirited energy of the ${agePeriodName}, finding magic in everyday moments.`,
+    'Radiant': `Full of vitality, bringing energy to all around you.`,
+    'Joyful': `Pure joy radiates from within, naturally uplifting.`,
+    'Luminous': `You glow from within, illuminating new paths.`,
+    'Vibrant': `Infectious energy, dynamic and impossible to ignore.`,
+    'Playful': `Delightfully playful, finding magic in moments.`,
+    'Bubbly': `Effervescent spirit, bright and refreshing.`,
+    'Exuberant': `Boundless enthusiasm that inspires others.`,
+    'Effervescent': `Sparkling energy that lights up any room.`,
+    'Sunny': `Warm presence that brightens everyone's day.`,
+    'Cheerful': `Uplifting spirit that spreads positivity.`,
 
     // 宁静系列
-    'Serene': `You possess inner peace, like the moonlight of the ${agePeriodName}, gently but firmly illuminating your own path.`,
-    'Tranquil': `Your calm presence is like still waters of the ${agePeriodName}, reflecting clarity and wisdom in all you do.`,
-    'Poised': `You carry yourself with elegant composure, like the balanced harmony of the ${agePeriodName}, steady and graceful under pressure.`,
-    'Mindful': `Your awareness and presence shine through, like the deep consciousness of the ${agePeriodName}, fully engaged in each moment.`,
-    'Grounded': `You have a beautiful connection to what matters, like the deep roots of the ${agePeriodName}, providing stability and strength.`,
+    'Serene': `Inner peace that gently illuminates your path.`,
+    'Tranquil': `Calm presence reflecting clarity and wisdom.`,
+    'Poised': `Elegant composure, steady under pressure.`,
+    'Mindful': `Present awareness, fully engaged in each moment.`,
+    'Grounded': `Deep connection providing stability and strength.`,
+    'Peaceful': `Tranquil nature that soothes and centers.`,
+    'Balanced': `Harmonious equilibrium in all you do.`,
+    'Centered': `Anchored calm amid life's storms.`,
+    'Zen': `Peaceful mindfulness in every action.`,
+    'Harmonious': `Beautiful balance creating unity.`,
 
     // 灵感系列
-    'Curious': `Your mind dances with wonder, like the exploring spirit of the ${agePeriodName}, always seeking new discoveries.`,
-    'Inspired': `Your creativity flows freely, like the artistic energy of the ${agePeriodName}, transforming ideas into beautiful realities.`,
-    'Whimsical': `You have a magical way of seeing the world, like the enchanting spirit of the ${agePeriodName}, finding delight in unexpected places.`,
-    'Eclectic': `Your unique blend of interests creates something special, like the diverse beauty of the ${agePeriodName}, combining elements in fascinating ways.`,
+    'Curious': `Wonder-filled mind seeking new discoveries.`,
+    'Inspired': `Creative energy transforming ideas to reality.`,
+    'Whimsical': `Magical worldview finding delight everywhere.`,
+    'Eclectic': `Unique blend creating something special.`,
+    'Adventurous': `Bold spirit embracing the unknown.`,
+    'Inquisitive': `Questioning mind uncovering truths.`,
+    'Spontaneous': `Free spirit following joy's call.`,
+    'Wonder-filled': `Eyes that see magic in the ordinary.`,
+    'Magical': `Enchanting presence that captivates.`,
+    'Creative': `Imaginative soul bringing visions to life.`,
 
     // 深度系列
-    'Soulful': `You have profound emotional depth, like the rich mysteries of the ${agePeriodName}, holding stories that touch the heart.`,
-    'Poetic': `Your soul expresses itself beautifully, like the lyrical essence of the ${agePeriodName}, finding poetry in life's moments.`,
-    'Introspective': `You possess deep self-awareness, like the reflective nature of the ${agePeriodName}, understanding yourself and others with compassion.`,
-    'Resonant': `Your presence creates meaningful connections, like the harmonious vibrations of the ${agePeriodName}, touching others in profound ways.`,
+    'Soulful': `Profound depth holding stories that touch hearts.`,
+    'Poetic': `Expressive soul finding poetry in life.`,
+    'Introspective': `Deep self-awareness and compassion.`,
+    'Resonant': `Meaningful connections that touch others deeply.`,
+    'Melancholic': `Beautiful depth in contemplation.`,
+    'Reflective': `Thoughtful nature pondering life's mysteries.`,
+    'Deep': `Profound understanding beneath the surface.`,
+    'Mystical': `Ethereal quality touching the sublime.`,
+    'Pensive': `Contemplative spirit seeking meaning.`,
+    'Dreamy': `Imaginative soul wandering beautiful realms.`,
 
     // 智慧系列
-    'Scholarly': `Your intellectual curiosity shines through, like the accumulated wisdom of the ${agePeriodName}, always learning and growing.`,
-    'Focused': `Your concentration and dedication are remarkable, like the precise clarity of the ${agePeriodName}, achieving excellence through focused effort.`,
-    'Analytical': `Your mind processes information with elegant precision, like the systematic beauty of the ${agePeriodName}, finding patterns and insights others miss.`,
-    'Cerebral': `Your intellectual depth is impressive, like the complex understanding of the ${agePeriodName}, thinking on multiple levels simultaneously.`,
+    'Scholarly': `Intellectual curiosity always learning, growing.`,
+    'Focused': `Remarkable dedication achieving excellence.`,
+    'Analytical': `Elegant precision finding hidden patterns.`,
+    'Cerebral': `Impressive depth thinking on multiple levels.`,
+    'Intellectual': `Brilliant mind exploring ideas deeply.`,
+    'Methodical': `Systematic approach mastering complexity.`,
+    'Contemplative': `Thoughtful consideration of all angles.`,
+    'Philosophical': `Deep wisdom questioning existence itself.`,
+
+    // 力量系列
+    'Passionate': `Fierce energy pursuing what matters most.`,
+    'Fiery': `Intense spirit that cannot be dimmed.`,
+    'Bold': `Courageous presence making waves.`,
+    'Determined': `Unwavering focus achieving the impossible.`,
+    'Courageous': `Brave heart facing challenges head-on.`,
+    'Intense': `Powerful energy commanding attention.`,
+    'Powerful': `Strong force shaping your world.`,
+    'Dynamic': `Energetic presence driving change.`,
+    'Strong-willed': `Resolute spirit bending to no one.`,
+    'Fierce': `Formidable strength protecting what's precious.`,
 
     // 真实系列
-    'Authentic': `You are genuinely yourself, like the natural essence of the ${agePeriodName}, beautiful in your originality and truth.`,
-    'Unique': `You are a unique individual, possessing the special charm of the ${agePeriodName}, no need to imitate, creating your own style.`,
-    'Genuine': `Your authenticity shines through, like the pure energy of the ${agePeriodName}, refreshingly real and wonderfully you.`
+    'Authentic': `Genuinely yourself, beautiful in originality.`,
+    'Unique': `One-of-a-kind charm, creating your own style.`,
+    'Genuine': `Refreshingly real and wonderfully you.`,
+    'Natural': `Effortless grace in your true self.`,
+    'Original': `Unprecedented spirit breaking the mold.`,
+    'Pure': `Untainted essence shining through.`,
+    'True': `Honest soul living with integrity.`,
+    'Real': `Unfiltered authenticity that resonates.`,
+    'Honest': `Transparent heart speaking truth.`,
+    'Unfiltered': `Raw beauty without pretense.`,
+
+    // 额外修饰词系列
+    'Ethereal': `Otherworldly grace transcending the ordinary.`,
+    'Graceful': `Elegant movement through life's dance.`,
+    'Elegant': `Refined beauty in every gesture.`,
+    'Divine': `Celestial quality touching the sacred.`,
+    'Angelic': `Pure light blessing those nearby.`,
+    'Celestial': `Starlike presence from beyond.`,
+    'Majestic': `Regal bearing commanding respect.`,
+    'Noble': `Honorable character standing tall.`,
+    'Heroic': `Brave spirit rising to the occasion.`,
+    'Regal': `Royal presence with natural authority.`,
+    'Stalwart': `Steadfast strength never wavering.`,
+    'Valiant': `Courageous heart facing any challenge.`,
+    'Youthful': `Fresh energy full of possibility.`,
+    'Fresh': `New perspective bringing innovation.`,
+    'New': `Emerging force shaping tomorrow.`,
+    'Emerging': `Rising star on the ascent.`,
+    'Blooming': `Unfolding beauty reaching potential.`,
+    'Ancient': `Timeless wisdom spanning ages.`,
+    'Eternal': `Enduring spirit beyond time.`,
+    'Timeless': `Ageless quality never fading.`,
+    'Wise': `Deep understanding guiding others.`,
+    'Venerable': `Respected presence earning admiration.`
   };
 
-  return descriptions[modifier] || `You possess the unique charm of the ${agePeriodName}, unforgettable like the ${imageName}.`;
+  return descriptions[modifier] || `Unique charm of ${agePeriodName}, unforgettable.`;
 }
 
 // 适配器函数：将现有的FaceAnalysisData转换为AmazonRekognitionData格式
@@ -418,9 +490,9 @@ export function generateVibeTagLegacy(faceData: any): VibeGenerationResult {
   } catch (error) {
     console.error('Legacy vibe generation error:', error);
     return {
-      tag: 'Unique You',
+      tag: 'UniqueYou',
       rarity: 'Classic',
-      description: 'Every version of you is a limited edition in the universe, no definition needed, naturally radiant.',
+      description: 'Limited edition in the universe, naturally radiant.',
       cardType: 'classic'
     };
   }
