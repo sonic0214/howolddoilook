@@ -1,4 +1,12 @@
 // 埋点分析工具
+
+// Google Analytics gtag 类型声明
+declare global {
+  interface Window {
+    gtag?: (command: string, eventName: string, parameters?: any) => void;
+  }
+}
+
 interface AnalyticsEvent {
   eventName: string;
   properties?: Record<string, any>;
@@ -41,32 +49,54 @@ const getUserDeviceInfo = () => {
   };
 };
 
+// 发送事件到 Google Analytics 4
+const sendToGA4 = (eventName: string, parameters: Record<string, any>) => {
+  try {
+    if (window.gtag) {
+      // 转换为 GA4 格式，限制参数数量
+      const ga4Params: any = {};
+      const paramKeys = Object.keys(parameters).slice(0, 25); // GA4 限制25个参数
+
+      paramKeys.forEach((key, index) => {
+        ga4Params[`custom_parameter_${index + 1}`] = parameters[key];
+      });
+
+      // 发送到 GA4
+      window.gtag('event', eventName, ga4Params);
+
+      console.log('📊 GA4 Event Sent:', { eventName, parameters: ga4Params });
+    }
+  } catch (error) {
+    console.warn('Failed to send GA4 event:', error);
+  }
+};
+
 // 发送埋点事件到服务器
 const sendAnalyticsEvent = async (event: AnalyticsEvent) => {
   try {
-    // 只在生产环境发送到服务器，开发环境只在控制台打印
+    const fullEventData = {
+      ...event,
+      timestamp: event.timestamp || Date.now(),
+      sessionId: getSessionId(),
+      url: window.location.href,
+      referrer: document.referrer || 'direct',
+    };
+
+    // 发送到 GA4（在生产环境）
     if (import.meta.env.PROD) {
+      sendToGA4(event.eventName, fullEventData);
+
+      // 同时发送到服务器 API
       await fetch('/api/analytics', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...event,
-          timestamp: event.timestamp || Date.now(),
-          sessionId: getSessionId(),
-          url: window.location.href,
-          referrer: document.referrer || 'direct',
-        }),
+        body: JSON.stringify(fullEventData),
       });
     } else {
       // 开发环境在控制台打印埋点信息
-      console.log('🔥 Analytics Event:', {
-        ...event,
-        timestamp: event.timestamp || Date.now(),
-        sessionId: getSessionId(),
-        url: window.location.href
-      });
+      console.log('🔥 Analytics Event:', fullEventData);
     }
   } catch (error) {
     console.warn('Failed to send analytics event:', error);
