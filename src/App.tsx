@@ -9,8 +9,6 @@ import LoadingSpinner from './components/LoadingSpinner';
 // Dynamic imports for code splitting
 const Home = lazy(() => import('./pages/Home'));
 const SkincareArticle = lazy(() => import('./pages/SkincareArticle'));
-const NutritionArticle = lazy(() => import('./pages/NutritionArticle'));
-const MindfulnessArticle = lazy(() => import('./pages/MindfulnessArticle'));
 const ArticlesPage = lazy(() => import('./pages/ArticlesPage'));
 
 function ScrollToTop() {
@@ -99,23 +97,7 @@ function App() {
             </Suspense>
           }
         />
-        <Route
-          path="/nutrition-article"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading nutrition guide..." />}>
-              <NutritionArticle />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/mindfulness-article"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
-              <MindfulnessArticle />
-            </Suspense>
-          }
-        />
-        <Route
+              <Route
           path="/articles"
           element={
             <Suspense fallback={<LoadingSpinner message="Loading articles..." />}>

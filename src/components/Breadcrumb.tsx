@@ -35,12 +35,35 @@ export default function Breadcrumb() {
       case 'mindfulness-article':
         articleTitle = 'Mindfulness Guide';
         break;
-    }
+      }
 
     breadcrumbItems.push({
       label: 'Articles',
       path: '/articles'
     });
+
+    breadcrumbItems.push({
+      label: articleTitle,
+      path: location.pathname
+    });
+  }
+
+  // Handle single segment article paths
+  if (pathSegments.length === 1) {
+    const articleType = pathSegments[0];
+    let articleTitle = 'Article';
+
+    switch(articleType) {
+      case 'skincare-article':
+        articleTitle = 'Skincare Guide';
+        break;
+      case 'nutrition-article':
+        articleTitle = 'Nutrition Guide';
+        break;
+      case 'mindfulness-article':
+        articleTitle = 'Mindfulness Guide';
+        break;
+    }
 
     breadcrumbItems.push({
       label: articleTitle,
