@@ -10,15 +10,15 @@ export default function MindfulnessArticle() {
     <div className="bg-white text-brand-dark">
       <ArticleSchema
         type="Article"
-        title="Stress Reduction for Younger Appearance: The Anti-Aging Power of Mindfulness"
-        description="Discover how 5 minutes of daily mindfulness can prevent premature aging, lower cortisol, and help you look younger than your actual age."
+        title="Mindfulness for Youthfulness: Stress Reduction for Younger Appearance"
+        description="Discover how 5 minutes of daily mindfulness can prevent premature aging, lower cortisol, and help you look younger than your actual age. Learn stress reduction techniques for longevity."
         author="Lumin AI"
-        datePublished="2025-10-28"
+        datePublished="2025-11-01"
         imageUrl="https://howolddoilook.art/og-image.jpg"
         imageCreator="Lumin AI"
         imageCreditText="Image created by Lumin AI"
         imageCopyrightNotice="© 2025 Lumin AI. All rights reserved."
-        url="https://howolddoilook.art/articles/stress-reduction-anti-aging"
+        url="https://howolddoilook.art/articles/mindfulness-for-youthfulness"
       />
       <Navbar />
       <Breadcrumb />

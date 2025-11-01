@@ -10,15 +10,15 @@ export default function NutritionArticle() {
     <div className="bg-white text-brand-dark">
       <ArticleSchema
         type="Article"
-        title="Anti-Aging Foods That Make You Look Younger Than Your Age"
-        description="Discover the top anti-aging foods that fight cellular aging and help maintain a youthful appearance through proper nutrition."
+        title="Nutrition and Aging: Foods That Make You Look Younger Than Your Age"
+        description="Discover the top anti-aging foods that fight cellular aging and help maintain a youthful appearance through proper nutrition. Learn about nutrition strategies for longevity and vitality."
         author="Lumin AI"
-        datePublished="2025-10-28"
+        datePublished="2025-11-01"
         imageUrl="https://howolddoilook.art/og-image.jpg"
         imageCreator="Lumin AI"
         imageCreditText="Image created by Lumin AI"
         imageCopyrightNotice="© 2025 Lumin AI. All rights reserved."
-        url="https://howolddoilook.art/articles/anti-aging-foods"
+        url="https://howolddoilook.art/articles/nutrition-and-aging"
       />
       <Navbar />
       <Breadcrumb />

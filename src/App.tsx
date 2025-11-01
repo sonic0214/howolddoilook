@@ -108,7 +108,23 @@ function App() {
           }
         />
         <Route
+          path="/articles/nutrition-and-aging"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading nutrition guide..." />}>
+              <NutritionArticle />
+            </Suspense>
+          }
+        />
+        <Route
           path="/mindfulness-article"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
+              <MindfulnessArticle />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/mindfulness-for-youthfulness"
           element={
             <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
               <MindfulnessArticle />
