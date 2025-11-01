@@ -35,13 +35,7 @@ export default function Breadcrumb() {
       case 'mindfulness-article':
         articleTitle = 'Mindfulness Guide';
         break;
-      case 'nutrition-and-aging':
-        articleTitle = 'Nutrition and Aging';
-        break;
-      case 'mindfulness-for-youthfulness':
-        articleTitle = 'Mindfulness for Youthfulness';
-        break;
-    }
+      }
 
     breadcrumbItems.push({
       label: 'Articles',

@@ -23,24 +23,5 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Article: Nutrition and Aging -->
-  <url>
-    <loc>https://howolddoilook.art/articles/nutrition-and-aging</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://howolddoilook.art/articles/nutrition-and-aging" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://howolddoilook.art/articles/nutrition-and-aging" />
-    <lastmod>2025-11-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Article: Mindfulness for Youthfulness -->
-  <url>
-    <loc>https://howolddoilook.art/articles/mindfulness-for-youthfulness</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://howolddoilook.art/articles/mindfulness-for-youthfulness" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://howolddoilook.art/articles/mindfulness-for-youthfulness" />
-    <lastmod>2025-11-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
+  
 </urlset>

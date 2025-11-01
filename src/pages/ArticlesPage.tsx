@@ -20,27 +20,7 @@ export default function ArticlesPage() {
       tags: ['Skin Barrier', 'Anti-Aging'],
       readTime: '5 min read'
     },
-    {
-      id: 'mindfulness-for-youthfulness',
-      title: 'Mindfulness for Youthful Appearance',
-      category: 'STRESS MANAGEMENT',
-      description: 'True radiance starts from within. Learn how stress management impacts how old you look and simple practices to maintain youthful energy.',
-      image: 'https://images.pexels.com/photos/3771045/pexels-photo-3771045.jpeg?auto=compress&cs=tinysrgb&w=800',
-      alt: 'Person meditating peacefully in morning light for mindfulness and radiance practice',
-      tags: ['Stress Relief', 'Mindfulness'],
-      readTime: '4 min read'
-    },
-    {
-      id: 'nutrition-and-aging',
-      title: 'Foods That Help You Look Younger',
-      category: 'ANTI-AGING NUTRITION',
-      description: 'Feed your skin from the inside. Science-backed nutrition tips that our face analysis shows can significantly impact your perceived age.',
-      image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800',
-      alt: 'Healthy salad bowl with fresh antioxidant-rich vegetables for glowing skin nutrition',
-      tags: ['Antioxidants', 'Skin Nutrition'],
-      readTime: '6 min read'
-    }
-  ];
+    ];
 
   return (
     <>
@@ -97,7 +77,7 @@ export default function ArticlesPage() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">{article.readTime}</span>
                       <a
-                        href={`/${article.id}`}
+                        href={`/articles/${article.id}`}
                         className="inline-block font-bold text-terracotta hover:text-amber-700 text-sm"
                       >
                         Read More →
