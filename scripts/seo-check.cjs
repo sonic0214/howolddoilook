@@ -275,7 +275,7 @@ function main() {
 
   const allPassed = Object.values(results).every(result => result);
 
-  log('\n' + '='.repeat(50), 'cyan');
+  log('cyan', '\n' + '='.repeat(50));
   if (allPassed) {
     log('green', '🎉 所有SEO检查通过！');
     log('green', '✅ 可以安全部署到生产环境');
