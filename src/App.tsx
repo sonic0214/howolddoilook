@@ -8,10 +8,7 @@ import LoadingSpinner from './components/LoadingSpinner';
 
 // Dynamic imports for code splitting
 const Home = lazy(() => import('./pages/Home'));
-const SkincareArticle = lazy(() => import('./pages/SkincareArticle'));
 const ArticlesPage = lazy(() => import('./pages/ArticlesPage'));
-const NutritionArticle = lazy(() => import('./pages/NutritionArticle'));
-const MindfulnessArticle = lazy(() => import('./pages/MindfulnessArticle'));
 const SkincareSecrets = lazy(() => import('./pages/SkincareSecrets'));
 const NutritionAndAging = lazy(() => import('./pages/NutritionAndAging'));
 const MindfulnessForYouthfulness = lazy(() => import('./pages/MindfulnessForYouthfulness'));
@@ -95,34 +92,10 @@ function App() {
           }
         />
         <Route
-          path="/skincare-article"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading skincare guide..." />}>
-              <SkincareArticle />
-            </Suspense>
-          }
-        />
-              <Route
           path="/articles"
           element={
             <Suspense fallback={<LoadingSpinner message="Loading articles..." />}>
               <ArticlesPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/nutrition-article"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading nutrition guide..." />}>
-              <NutritionArticle />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/mindfulness-article"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
-              <MindfulnessArticle />
             </Suspense>
           }
         />

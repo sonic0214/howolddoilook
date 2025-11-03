@@ -12,9 +12,6 @@ const path = require('path');
 const EXPECTED_ROUTES = [
   '/',
   '/articles',
-  '/skincare-article',
-  '/nutrition-article',
-  '/mindfulness-article',
   '/articles/skincare-secrets',
   '/articles/nutrition-and-aging',
   '/articles/mindfulness-for-youthfulness'
@@ -24,9 +21,6 @@ const EXPECTED_ROUTES = [
 const PAGE_COMPONENTS = {
   '/': 'Home.tsx',
   '/articles': 'ArticlesPage.tsx',
-  '/skincare-article': 'SkincareArticle.tsx',
-  '/nutrition-article': 'NutritionArticle.tsx',
-  '/mindfulness-article': 'MindfulnessArticle.tsx',
   '/articles/skincare-secrets': 'SkincareSecrets.tsx',
   '/articles/nutrition-and-aging': 'NutritionAndAging.tsx',
   '/articles/mindfulness-for-youthfulness': 'MindfulnessForYouthfulness.tsx'

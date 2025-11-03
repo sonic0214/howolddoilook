@@ -49,9 +49,6 @@
 ```
 /                           → Home.tsx
 /articles                   → ArticlesPage.tsx
-/skincare-article           → SkincareArticle.tsx
-/nutrition-article          → NutritionArticle.tsx
-/mindfulness-article        → MindfulnessArticle.tsx
 ```
 
 ### 文章详情页面

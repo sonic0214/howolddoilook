@@ -72,7 +72,7 @@
       "name": "Skincare Guide",
       "short_name": "Skincare",
       "description": "Read our skincare tips",
-      "url": "/skincare-article",
+      "url": "/articles/skincare-secrets",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ],

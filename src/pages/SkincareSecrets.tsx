@@ -132,7 +132,7 @@ export default function SkincareSecrets() {
           <h3 className="font-serif-display text-2xl font-bold mb-6">Enhance Your Youthful Appearance</h3>
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <Link
-              to="/nutrition-article"
+              to="/articles/nutrition-and-aging"
               className="group bg-gray-50 p-6 rounded-lg hover:bg-terracotta/5 transition-colors"
             >
               <h4 className="font-bold text-lg mb-2 group-hover:text-terracotta transition-colors">
@@ -143,7 +143,7 @@ export default function SkincareSecrets() {
               </p>
             </Link>
             <Link
-              to="/mindfulness-article"
+              to="/articles/mindfulness-for-youthfulness"
               className="group bg-gray-50 p-6 rounded-lg hover:bg-terracotta/5 transition-colors"
             >
               <h4 className="font-bold text-lg mb-2 group-hover:text-terracotta transition-colors">

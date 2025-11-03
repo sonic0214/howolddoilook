@@ -30,7 +30,7 @@ export default function Articles() {
               defenses.
             </p>
             <Link
-              to="/skincare-article#top"
+              to="/articles/skincare-secrets#top"
               className="inline-block mt-4 font-bold text-brand-dark hover:text-terracotta"
             >
               Read More &rarr;
@@ -54,7 +54,7 @@ export default function Articles() {
               boost clarity.
             </p>
             <Link
-              to="/mindfulness-article#top"
+              to="/articles/mindfulness-for-youthfulness#top"
               className="inline-block mt-4 font-bold text-brand-dark hover:text-terracotta"
             >
               Read More &rarr;
@@ -78,7 +78,7 @@ export default function Articles() {
               foods.
             </p>
             <Link
-              to="/nutrition-article#top"
+              to="/articles/nutrition-and-aging#top"
               className="inline-block mt-4 font-bold text-brand-dark hover:text-terracotta"
             >
               Read More &rarr;
