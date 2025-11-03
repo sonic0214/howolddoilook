@@ -20,7 +20,27 @@ export default function ArticlesPage() {
       tags: ['Skin Barrier', 'Anti-Aging'],
       readTime: '5 min read'
     },
-    ];
+    {
+      id: 'nutrition-and-aging',
+      title: 'Nutrition and Aging: Foods That Fight Time',
+      category: 'NUTRITION SCIENCE',
+      description: 'Discover the science behind how nutrition affects aging and learn which foods can help you maintain a youthful appearance and vitality.',
+      image: 'https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=800',
+      alt: 'Fresh anti-aging foods including colorful fruits, vegetables, nuts, and fish',
+      tags: ['Nutrition', 'Anti-Aging', 'Health'],
+      readTime: '8 min read'
+    },
+    {
+      id: 'mindfulness-for-youthfulness',
+      title: 'Mindfulness for Youthfulness: The Mental Approach to Anti-Aging',
+      category: 'MENTAL WELLNESS',
+      description: 'Discover how mindfulness practices can reduce stress-induced aging and help maintain a youthful appearance through mental wellness.',
+      image: 'https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=800',
+      alt: 'Peaceful meditation practice showing mindfulness for stress reduction',
+      tags: ['Mindfulness', 'Stress Reduction', 'Anti-Aging'],
+      readTime: '7 min read'
+    }
+  ];
 
   return (
     <>

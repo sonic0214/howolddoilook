@@ -10,6 +10,11 @@ import LoadingSpinner from './components/LoadingSpinner';
 const Home = lazy(() => import('./pages/Home'));
 const SkincareArticle = lazy(() => import('./pages/SkincareArticle'));
 const ArticlesPage = lazy(() => import('./pages/ArticlesPage'));
+const NutritionArticle = lazy(() => import('./pages/NutritionArticle'));
+const MindfulnessArticle = lazy(() => import('./pages/MindfulnessArticle'));
+const SkincareSecrets = lazy(() => import('./pages/SkincareSecrets'));
+const NutritionAndAging = lazy(() => import('./pages/NutritionAndAging'));
+const MindfulnessForYouthfulness = lazy(() => import('./pages/MindfulnessForYouthfulness'));
 
 function ScrollToTop() {
   const location = useLocation();
@@ -102,6 +107,46 @@ function App() {
           element={
             <Suspense fallback={<LoadingSpinner message="Loading articles..." />}>
               <ArticlesPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/nutrition-article"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading nutrition guide..." />}>
+              <NutritionArticle />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/mindfulness-article"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
+              <MindfulnessArticle />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/skincare-secrets"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading skincare secrets..." />}>
+              <SkincareSecrets />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/nutrition-and-aging"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading nutrition and aging guide..." />}>
+              <NutritionAndAging />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/articles/mindfulness-for-youthfulness"
+          element={
+            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
+              <MindfulnessForYouthfulness />
             </Suspense>
           }
         />
