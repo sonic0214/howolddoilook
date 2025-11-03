@@ -10,20 +10,12 @@ const path = require('path');
 
 // 定义所有应该存在的路由
 const EXPECTED_ROUTES = [
-  '/',
-  '/articles',
-  '/articles/skincare-secrets',
-  '/articles/nutrition-and-aging',
-  '/articles/mindfulness-for-youthfulness'
+  '/'
 ];
 
 // 页面组件映射
 const PAGE_COMPONENTS = {
-  '/': 'Home.tsx',
-  '/articles': 'ArticlesPage.tsx',
-  '/articles/skincare-secrets': 'SkincareSecrets.tsx',
-  '/articles/nutrition-and-aging': 'NutritionAndAging.tsx',
-  '/articles/mindfulness-for-youthfulness': 'MindfulnessForYouthfulness.tsx'
+  '/': 'Home.tsx'
 };
 
 // 检查颜色

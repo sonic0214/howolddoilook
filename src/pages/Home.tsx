@@ -6,8 +6,6 @@ import Features from '../components/Features';
 import Testimonials from '../components/Testimonials';
 import HowItWorks from '../components/HowItWorks';
 import CaseStudies from '../components/CaseStudies';
-import Articles from '../components/Articles';
-import RelatedContent from '../components/RelatedContent';
 import FAQ from '../components/FAQ';
 import CTA from '../components/CTA';
 import Footer from '../components/Footer';
@@ -42,9 +40,7 @@ export default function Home() {
       <Privacy />
       <Testimonials />
       <CaseStudies />
-      <Articles />
-      <RelatedContent />
-      <FAQ />
+        <FAQ />
       <CTA />
       <Footer />
     </div>

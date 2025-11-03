@@ -8,10 +8,6 @@ import LoadingSpinner from './components/LoadingSpinner';
 
 // Dynamic imports for code splitting
 const Home = lazy(() => import('./pages/Home'));
-const ArticlesPage = lazy(() => import('./pages/ArticlesPage'));
-const SkincareSecrets = lazy(() => import('./pages/SkincareSecrets'));
-const NutritionAndAging = lazy(() => import('./pages/NutritionAndAging'));
-const MindfulnessForYouthfulness = lazy(() => import('./pages/MindfulnessForYouthfulness'));
 
 function ScrollToTop() {
   const location = useLocation();
@@ -91,39 +87,7 @@ function App() {
             </Suspense>
           }
         />
-        <Route
-          path="/articles"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading articles..." />}>
-              <ArticlesPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/articles/skincare-secrets"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading skincare secrets..." />}>
-              <SkincareSecrets />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/articles/nutrition-and-aging"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading nutrition and aging guide..." />}>
-              <NutritionAndAging />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/articles/mindfulness-for-youthfulness"
-          element={
-            <Suspense fallback={<LoadingSpinner message="Loading mindfulness guide..." />}>
-              <MindfulnessForYouthfulness />
-            </Suspense>
-          }
-        />
-        </Routes>
+            </Routes>
       </Router>
       <Analytics />
       <SpeedInsights />

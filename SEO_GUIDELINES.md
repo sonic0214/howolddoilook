@@ -48,14 +48,6 @@
 ### 主要页面
 ```
 /                           → Home.tsx
-/articles                   → ArticlesPage.tsx
-```
-
-### 文章详情页面
-```
-/articles/skincare-secrets              → SkincareSecrets.tsx
-/articles/nutrition-and-aging          → NutritionAndAging.tsx
-/articles/mindfulness-for-youthfulness → MindfulnessForYouthfulness.tsx
 ```
 
 ## 🔍 SEO检查流程

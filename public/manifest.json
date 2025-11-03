@@ -68,14 +68,7 @@
       "url": "/#upload",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
-    {
-      "name": "Skincare Guide",
-      "short_name": "Skincare",
-      "description": "Read our skincare tips",
-      "url": "/articles/skincare-secrets",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
-    }
-  ],
+    ],
   "categories": ["entertainment", "lifestyle", "utilities", "beauty"],
   "screenshots": [
     {
