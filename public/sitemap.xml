@@ -8,9 +8,41 @@
   <!-- Homepage -->
   <url>
     <loc>https://howolddoilook.art/</loc>
-    <lastmod>2025-11-01</lastmod>
+    <lastmod>2025-11-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <!-- Articles Listing Page -->
+  <url>
+    <loc>https://howolddoilook.art/articles</loc>
+    <lastmod>2025-11-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Article: Skincare Article -->
+  <url>
+    <loc>https://howolddoilook.art/skincare-article</loc>
+    <lastmod>2025-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Article: Nutrition Article -->
+  <url>
+    <loc>https://howolddoilook.art/nutrition-article</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Article: Mindfulness Article -->
+  <url>
+    <loc>https://howolddoilook.art/mindfulness-article</loc>
+    <lastmod>2025-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Article: Skincare Secrets -->
@@ -23,5 +55,20 @@
     <priority>0.8</priority>
   </url>
 
-  
+  <!-- Article: Nutrition and Aging -->
+  <url>
+    <loc>https://howolddoilook.art/articles/nutrition-and-aging</loc>
+    <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Article: Mindfulness for Youthfulness -->
+  <url>
+    <loc>https://howolddoilook.art/articles/mindfulness-for-youthfulness</loc>
+    <lastmod>2025-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
